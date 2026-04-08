@@ -8,6 +8,7 @@ import com.gym.gymtracker.model.Workout;
 import com.gym.gymtracker.repository.UserRepository;
 import com.gym.gymtracker.repository.WorkoutRepository;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -65,7 +66,9 @@ class WorkoutServiceTest {
     void findByIdThrowsWhenWorkoutMissing() {
         when(workoutRepository.findById(1L)).thenReturn(Optional.empty());
 
-        assertThrows(ResourceNotFoundException.class, () -> workoutService.findById(1L));
+        Executable action = () -> workoutService.findById(1L);
+
+        assertThrows(ResourceNotFoundException.class, action);
     }
 
     @Test
@@ -101,9 +104,10 @@ class WorkoutServiceTest {
     @Test
     void createThrowsWhenUserMissing() {
         when(userRepository.findById(1L)).thenReturn(Optional.empty());
+        WorkoutDto request = WorkoutDto.builder().name("Leg Day").userId(1L).build();
+        Executable action = () -> workoutService.create(request);
 
-        assertThrows(ResourceNotFoundException.class, () -> workoutService.create(
-            WorkoutDto.builder().name("Leg Day").userId(1L).build()));
+        assertThrows(ResourceNotFoundException.class, action);
     }
 
     @Test
@@ -161,8 +165,10 @@ class WorkoutServiceTest {
     @Test
     void updateThrowsWhenWorkoutMissing() {
         when(workoutRepository.findById(5L)).thenReturn(Optional.empty());
+        WorkoutDto request = WorkoutDto.builder().build();
+        Executable action = () -> workoutService.update(5L, request);
 
-        assertThrows(ResourceNotFoundException.class, () -> workoutService.update(5L, WorkoutDto.builder().build()));
+        assertThrows(ResourceNotFoundException.class, action);
     }
 
     @Test
@@ -173,8 +179,10 @@ class WorkoutServiceTest {
         when(workoutRepository.findById(5L)).thenReturn(Optional.of(existing));
         when(userRepository.findById(2L)).thenReturn(Optional.empty());
 
-        assertThrows(ResourceNotFoundException.class,
-            () -> workoutService.update(5L, WorkoutDto.builder().name("New").userId(2L).build()));
+        WorkoutDto request = WorkoutDto.builder().name("New").userId(2L).build();
+        Executable action = () -> workoutService.update(5L, request);
+
+        assertThrows(ResourceNotFoundException.class, action);
     }
 
     @Test

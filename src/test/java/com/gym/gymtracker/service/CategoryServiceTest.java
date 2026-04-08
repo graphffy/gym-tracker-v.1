@@ -6,6 +6,7 @@ import com.gym.gymtracker.mapper.CategoryMapper;
 import com.gym.gymtracker.model.Category;
 import com.gym.gymtracker.repository.CategoryRepository;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -59,7 +60,9 @@ class CategoryServiceTest {
     void findByIdThrowsWhenCategoryMissing() {
         when(categoryRepository.findById(1L)).thenReturn(Optional.empty());
 
-        assertThrows(ResourceNotFoundException.class, () -> categoryService.findById(1L));
+        Executable action = () -> categoryService.findById(1L);
+
+        assertThrows(ResourceNotFoundException.class, action);
     }
 
     @Test
@@ -92,7 +95,10 @@ class CategoryServiceTest {
     void updateThrowsWhenCategoryMissing() {
         when(categoryRepository.findById(3L)).thenReturn(Optional.empty());
 
-        assertThrows(ResourceNotFoundException.class, () -> categoryService.update(3L, CategoryDto.builder().build()));
+        CategoryDto request = CategoryDto.builder().build();
+        Executable action = () -> categoryService.update(3L, request);
+
+        assertThrows(ResourceNotFoundException.class, action);
     }
 
     @Test

@@ -74,7 +74,7 @@ public class WorkoutSetService {
 
         List<WorkoutSetDto> createdSets = request.getSets().stream()
             .map(item -> createAndMapSingleSet(workout, exercisesById, item))
-            .collect(Collectors.toList());
+            .toList();
 
         invalidateWorkoutSetSearchIndex();
         return createdSets;
@@ -91,11 +91,11 @@ public class WorkoutSetService {
                 item.getReps(),
                 workout,
                 getExerciseFromMapOrThrow(exercisesById, item.getExerciseId())))
-            .collect(Collectors.toList());
+            .toList();
 
         List<WorkoutSetDto> createdSets = workoutSetRepository.saveAll(setsToSave).stream()
             .map(workoutSetMapper::toDto)
-            .collect(Collectors.toList());
+            .toList();
 
         invalidateWorkoutSetSearchIndex();
         return createdSets;
@@ -178,7 +178,7 @@ public class WorkoutSetService {
         List<WorkoutSetDto> content = pageResult.getContent()
             .stream()
             .map(workoutSetMapper::toDto)
-            .collect(Collectors.toList());
+            .toList();
         return new PageImpl<>(content, pageable, pageResult.getTotalElements());
     }
 

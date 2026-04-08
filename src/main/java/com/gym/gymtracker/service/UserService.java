@@ -1,34 +1,36 @@
 package com.gym.gymtracker.service;
 
-import com.gym.gymtracker.exception.ResourceNotFoundException;
 import com.gym.gymtracker.dto.UserDto;
+import com.gym.gymtracker.exception.ResourceNotFoundException;
 import com.gym.gymtracker.mapper.UserMapper;
 import com.gym.gymtracker.model.User;
 import com.gym.gymtracker.model.Workout;
 import com.gym.gymtracker.repository.UserRepository;
 import com.gym.gymtracker.repository.WorkoutRepository;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
+
     private final UserRepository userRepository;
     private final WorkoutRepository workoutRepository;
     private final UserMapper userMapper;
-
 
     @Transactional(readOnly = true)
     public List<UserDto> findAll() {
         return userRepository.findAll().stream()
             .map(userMapper::toDto)
-            .collect(Collectors.toList());
+            .toList();
     }
 
     @Transactional(readOnly = true)
@@ -56,15 +58,15 @@ public class UserService {
     public UserDto createWithDirtyTest(UserDto dto, boolean throwError) {
         User user = userMapper.toEntity(dto);
         User savedUser = userRepository.save(user);
-        System.out.println(">>> Шаг 1: Пользователь сохранен в БД с ID: " + savedUser.getId());
+        LOGGER.info("User saved during transaction demo with id={}", savedUser.getId());
 
         if (throwError) {
-            System.out.println(">>> ШАГ 2: Имитация сбоя...");
-            throw new RuntimeException("Сбой после сохранения юзера, но до сохранения тренировки!");
+            LOGGER.warn("Forcing failure after user save in transaction demo");
+            throw new IllegalStateException("Transaction demo failed after user save and before workout save");
         }
 
         Workout workout = Workout.builder()
-            .name("Приветственная тренировка")
+            .name("Welcome workout")
             .user(savedUser)
             .build();
         workoutRepository.save(workout);
@@ -77,7 +79,7 @@ public class UserService {
         User user = userMapper.toEntity(dto);
 
         Workout firstWorkout = Workout.builder()
-            .name("Первая тренировка")
+            .name("First workout")
             .workoutDate(LocalDateTime.now())
             .user(user)
             .build();
@@ -87,7 +89,7 @@ public class UserService {
         User savedUser = userRepository.save(user);
 
         if (makeError) {
-            throw new RuntimeException("Ошибка: транзакция откатывается, данные не будут сохранены в БД");
+            throw new IllegalStateException("Transaction demo failed while creating the first workout");
         }
 
         return userMapper.toDto(savedUser);

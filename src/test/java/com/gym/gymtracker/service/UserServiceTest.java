@@ -8,6 +8,7 @@ import com.gym.gymtracker.model.Workout;
 import com.gym.gymtracker.repository.UserRepository;
 import com.gym.gymtracker.repository.WorkoutRepository;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -68,7 +69,9 @@ class UserServiceTest {
     void findByUsernameThrowsWhenUserMissing() {
         when(userRepository.findByUsername("ivan")).thenReturn(null);
 
-        assertThrows(ResourceNotFoundException.class, () -> userService.findByUsername("ivan"));
+        Executable action = () -> userService.findByUsername("ivan");
+
+        assertThrows(ResourceNotFoundException.class, action);
     }
 
     @Test
@@ -86,7 +89,9 @@ class UserServiceTest {
     void findByIdThrowsWhenUserMissing() {
         when(userRepository.findById(2L)).thenReturn(Optional.empty());
 
-        assertThrows(ResourceNotFoundException.class, () -> userService.findById(2L));
+        Executable action = () -> userService.findById(2L);
+
+        assertThrows(ResourceNotFoundException.class, action);
     }
 
     @Test
@@ -112,7 +117,9 @@ class UserServiceTest {
         when(userMapper.toEntity(request)).thenReturn(entity);
         when(userRepository.save(entity)).thenReturn(saved);
 
-        assertThrows(RuntimeException.class, () -> userService.createWithDirtyTest(request, true));
+        Executable action = () -> userService.createWithDirtyTest(request, true);
+
+        assertThrows(IllegalStateException.class, action);
     }
 
     @Test
@@ -154,7 +161,9 @@ class UserServiceTest {
         when(userMapper.toEntity(request)).thenReturn(entity);
         when(userRepository.save(entity)).thenReturn(saved);
 
-        assertThrows(RuntimeException.class, () -> userService.createWithFirstWorkout(request, true));
+        Executable action = () -> userService.createWithFirstWorkout(request, true);
+
+        assertThrows(IllegalStateException.class, action);
         assertEquals(1, entity.getWorkouts().size());
     }
 
@@ -183,7 +192,9 @@ class UserServiceTest {
     @Test
     void updateThrowsWhenUserMissing() {
         when(userRepository.findById(5L)).thenReturn(Optional.empty());
+        UserDto request = UserDto.builder().build();
+        Executable action = () -> userService.update(5L, request);
 
-        assertThrows(ResourceNotFoundException.class, () -> userService.update(5L, UserDto.builder().build()));
+        assertThrows(ResourceNotFoundException.class, action);
     }
 }

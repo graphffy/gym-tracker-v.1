@@ -8,6 +8,7 @@ import com.gym.gymtracker.model.Exercise;
 import com.gym.gymtracker.repository.CategoryRepository;
 import com.gym.gymtracker.repository.ExerciseRepository;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -66,7 +67,9 @@ class ExerciseServiceTest {
     void findByIdThrowsWhenExerciseMissing() {
         when(exerciseRepository.findById(1L)).thenReturn(Optional.empty());
 
-        assertThrows(ResourceNotFoundException.class, () -> exerciseService.findById(1L));
+        Executable action = () -> exerciseService.findById(1L);
+
+        assertThrows(ResourceNotFoundException.class, action);
     }
 
     @Test
@@ -148,9 +151,10 @@ class ExerciseServiceTest {
     @Test
     void updateThrowsWhenExerciseMissing() {
         when(exerciseRepository.findById(2L)).thenReturn(Optional.empty());
+        ExerciseDto request = ExerciseDto.builder().build();
+        Executable action = () -> exerciseService.update(2L, request);
 
-        assertThrows(ResourceNotFoundException.class,
-            () -> exerciseService.update(2L, ExerciseDto.builder().build()));
+        assertThrows(ResourceNotFoundException.class, action);
     }
 
     @Test

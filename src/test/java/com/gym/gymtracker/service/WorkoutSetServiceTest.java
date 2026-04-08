@@ -12,6 +12,7 @@ import com.gym.gymtracker.repository.ExerciseRepository;
 import com.gym.gymtracker.repository.WorkoutRepository;
 import com.gym.gymtracker.repository.WorkoutSetRepository;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -30,7 +31,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -84,7 +84,9 @@ class WorkoutSetServiceTest {
     void findByIdThrowsWhenSetMissing() {
         when(workoutSetRepository.findById(1L)).thenReturn(Optional.empty());
 
-        assertThrows(ResourceNotFoundException.class, () -> workoutSetService.findById(1L));
+        Executable action = () -> workoutSetService.findById(1L);
+
+        assertThrows(ResourceNotFoundException.class, action);
     }
 
     @Test
@@ -106,9 +108,10 @@ class WorkoutSetServiceTest {
     @Test
     void createThrowsWhenWorkoutMissing() {
         when(workoutRepository.findById(10L)).thenReturn(Optional.empty());
+        WorkoutSetDto request = WorkoutSetDto.builder().workoutId(10L).exerciseId(20L).weight(80.0).reps(10).build();
+        Executable action = () -> workoutSetService.create(request);
 
-        assertThrows(ResourceNotFoundException.class, () -> workoutSetService.create(
-            WorkoutSetDto.builder().workoutId(10L).exerciseId(20L).weight(80.0).reps(10).build()));
+        assertThrows(ResourceNotFoundException.class, action);
     }
 
     @Test
@@ -118,8 +121,10 @@ class WorkoutSetServiceTest {
         when(workoutRepository.findById(10L)).thenReturn(Optional.of(workout));
         when(exerciseRepository.findById(20L)).thenReturn(Optional.empty());
 
-        assertThrows(ResourceNotFoundException.class, () -> workoutSetService.create(
-            WorkoutSetDto.builder().workoutId(10L).exerciseId(20L).weight(80.0).reps(10).build()));
+        WorkoutSetDto request = WorkoutSetDto.builder().workoutId(10L).exerciseId(20L).weight(80.0).reps(10).build();
+        Executable action = () -> workoutSetService.create(request);
+
+        assertThrows(ResourceNotFoundException.class, action);
     }
 
     @Test
@@ -150,9 +155,10 @@ class WorkoutSetServiceTest {
     @Test
     void createBulkNonTransactionalThrowsWhenWorkoutMissing() {
         when(workoutRepository.findById(10L)).thenReturn(Optional.empty());
+        BulkWorkoutSetRequestDto request = bulkRequest(10L, List.of(item(20L, 80.0, 10)));
+        Executable action = () -> workoutSetService.createBulkNonTransactional(request);
 
-        assertThrows(ResourceNotFoundException.class,
-            () -> workoutSetService.createBulkNonTransactional(bulkRequest(10L, List.of(item(20L, 80.0, 10)))));
+        assertThrows(ResourceNotFoundException.class, action);
     }
 
     @Test
@@ -162,8 +168,10 @@ class WorkoutSetServiceTest {
         when(workoutRepository.findById(10L)).thenReturn(Optional.of(workout));
         when(exerciseRepository.findAllById(any())).thenReturn(List.of());
 
-        assertThrows(ResourceNotFoundException.class,
-            () -> workoutSetService.createBulkNonTransactional(bulkRequest(10L, List.of(item(20L, 80.0, 10)))));
+        BulkWorkoutSetRequestDto request = bulkRequest(10L, List.of(item(20L, 80.0, 10)));
+        Executable action = () -> workoutSetService.createBulkNonTransactional(request);
+
+        assertThrows(ResourceNotFoundException.class, action);
     }
 
     @Test
@@ -187,9 +195,10 @@ class WorkoutSetServiceTest {
     @Test
     void createBulkTransactionalThrowsWhenWorkoutMissing() {
         when(workoutRepository.findById(10L)).thenReturn(Optional.empty());
+        BulkWorkoutSetRequestDto request = bulkRequest(10L, List.of(item(20L, 80.0, 10)));
+        Executable action = () -> workoutSetService.createBulkTransactional(request);
 
-        assertThrows(ResourceNotFoundException.class,
-            () -> workoutSetService.createBulkTransactional(bulkRequest(10L, List.of(item(20L, 80.0, 10)))));
+        assertThrows(ResourceNotFoundException.class, action);
     }
 
     @Test
@@ -199,8 +208,10 @@ class WorkoutSetServiceTest {
         when(workoutRepository.findById(10L)).thenReturn(Optional.of(workout));
         when(exerciseRepository.findAllById(any())).thenReturn(List.of());
 
-        assertThrows(ResourceNotFoundException.class,
-            () -> workoutSetService.createBulkTransactional(bulkRequest(10L, List.of(item(20L, 80.0, 10)))));
+        BulkWorkoutSetRequestDto request = bulkRequest(10L, List.of(item(20L, 80.0, 10)));
+        Executable action = () -> workoutSetService.createBulkTransactional(request);
+
+        assertThrows(ResourceNotFoundException.class, action);
     }
 
     @Test
@@ -269,8 +280,10 @@ class WorkoutSetServiceTest {
     @Test
     void updateThrowsWhenSetMissing() {
         when(workoutSetRepository.findById(1L)).thenReturn(Optional.empty());
+        WorkoutSetDto request = WorkoutSetDto.builder().build();
+        Executable action = () -> workoutSetService.update(1L, request);
 
-        assertThrows(ResourceNotFoundException.class, () -> workoutSetService.update(1L, WorkoutSetDto.builder().build()));
+        assertThrows(ResourceNotFoundException.class, action);
     }
 
     @Test
@@ -284,8 +297,10 @@ class WorkoutSetServiceTest {
         when(workoutSetRepository.findById(1L)).thenReturn(Optional.of(existing));
         when(workoutRepository.findById(11L)).thenReturn(Optional.empty());
 
-        assertThrows(ResourceNotFoundException.class, () -> workoutSetService.update(
-            1L, WorkoutSetDto.builder().workoutId(11L).exerciseId(20L).weight(75.0).reps(9).build()));
+        WorkoutSetDto request = WorkoutSetDto.builder().workoutId(11L).exerciseId(20L).weight(75.0).reps(9).build();
+        Executable action = () -> workoutSetService.update(1L, request);
+
+        assertThrows(ResourceNotFoundException.class, action);
     }
 
     @Test
@@ -299,8 +314,10 @@ class WorkoutSetServiceTest {
         when(workoutSetRepository.findById(1L)).thenReturn(Optional.of(existing));
         when(exerciseRepository.findById(21L)).thenReturn(Optional.empty());
 
-        assertThrows(ResourceNotFoundException.class, () -> workoutSetService.update(
-            1L, WorkoutSetDto.builder().workoutId(10L).exerciseId(21L).weight(75.0).reps(9).build()));
+        WorkoutSetDto request = WorkoutSetDto.builder().workoutId(10L).exerciseId(21L).weight(75.0).reps(9).build();
+        Executable action = () -> workoutSetService.update(1L, request);
+
+        assertThrows(ResourceNotFoundException.class, action);
     }
 
     @Test
@@ -399,7 +416,7 @@ class WorkoutSetServiceTest {
         hashCodeMethod.setAccessible(true);
         toStringMethod.setAccessible(true);
 
-        assertEquals(first, first);
+        assertSame(first, first);
         assertEquals(first, same);
         assertNotEquals(first, different);
         assertNotEquals(first, usernameDifferent);
@@ -407,8 +424,8 @@ class WorkoutSetServiceTest {
         assertNotEquals(first, pageDifferent);
         assertNotEquals(first, sizeDifferent);
         assertNotEquals(first, nativeDifferent);
-        assertFalse(first.equals(null));
-        assertFalse(first.equals("other"));
+        assertNotEquals(null, first);
+        assertNotEquals("other", first);
         assertEquals(hashCodeMethod.invoke(first), hashCodeMethod.invoke(same));
         assertNotEquals(hashCodeMethod.invoke(first), hashCodeMethod.invoke(different));
         assertEquals(
@@ -420,14 +437,9 @@ class WorkoutSetServiceTest {
     void getExerciseFromMapOrThrowThrowsWhenExerciseMissing() throws Exception {
         Method method = WorkoutSetService.class.getDeclaredMethod("getExerciseFromMapOrThrow", Map.class, Long.class);
         method.setAccessible(true);
+        Executable action = () -> invokeGetExerciseFromMapOrThrow(method, Map.of(), 20L);
 
-        assertThrows(ResourceNotFoundException.class, () -> {
-            try {
-                method.invoke(workoutSetService, Map.of(), 20L);
-            } catch (ReflectiveOperationException ex) {
-                throw (RuntimeException) ex.getCause();
-            }
-        });
+        assertThrows(ResourceNotFoundException.class, action);
     }
 
     private BulkWorkoutSetRequestDto bulkRequest(Long workoutId, List<BulkWorkoutSetItemDto> items) {
@@ -451,6 +463,15 @@ class WorkoutSetServiceTest {
         Field field = WorkoutSetService.class.getDeclaredField("workoutSetSearchIndex");
         field.setAccessible(true);
         field.set(workoutSetService, map);
+    }
+
+    private void invokeGetExerciseFromMapOrThrow(Method method, Map<Long, Exercise> exercisesById, Long exerciseId)
+        throws Throwable {
+        try {
+            method.invoke(workoutSetService, exercisesById, exerciseId);
+        } catch (ReflectiveOperationException ex) {
+            throw ex.getCause();
+        }
     }
 
     private static final class ReturningExistingMap extends ConcurrentHashMap<Object, Page<WorkoutSetDto>> {
