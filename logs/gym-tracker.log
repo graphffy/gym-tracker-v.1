@@ -179,3 +179,74 @@
 2026-04-09 00:20:53.690 INFO  [main] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
 2026-04-09 00:20:53.698 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
 2026-04-09 00:20:53.700 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-04-09 00:20:59.157 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2026-04-09 00:20:59.201 INFO  [main] c.g.gymtracker.GymTrackerApplication - Starting GymTrackerApplication using Java 17.0.18 with PID 25056 (C:\Users\graph\IdeaProjects\gym-tracker\target\classes started by graph in C:\Users\graph\IdeaProjects\gym-tracker)
+2026-04-09 00:20:59.202 DEBUG [main] c.g.gymtracker.GymTrackerApplication - Running with Spring Boot v3.2.3, Spring v6.1.4
+2026-04-09 00:20:59.203 INFO  [main] c.g.gymtracker.GymTrackerApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-09 00:20:59.962 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-09 00:21:00.020 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 51 ms. Found 5 JPA repository interfaces.
+2026-04-09 00:21:00.596 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-04-09 00:21:00.609 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-04-09 00:21:00.611 INFO  [main] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-09 00:21:00.611 INFO  [main] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-04-09 00:21:00.669 INFO  [main] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-04-09 00:21:00.670 INFO  [main] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1418 ms
+2026-04-09 00:21:00.856 INFO  [main] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-09 00:21:00.915 INFO  [main] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-04-09 00:21:00.946 INFO  [main] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-04-09 00:21:01.172 INFO  [main] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-09 00:21:01.198 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-04-09 00:21:01.360 INFO  [main] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@2f038d3c
+2026-04-09 00:21:01.361 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-04-09 00:21:01.395 WARN  [main] org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-09 00:21:02.451 INFO  [main] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-09 00:21:02.545 INFO  [main] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-09 00:21:03.086 INFO  [main] o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-09 00:21:03.662 WARN  [main] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-09 00:21:04.141 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-04-09 00:21:04.157 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-04-09 00:21:04.165 INFO  [main] c.g.gymtracker.GymTrackerApplication - Started GymTrackerApplication in 5.484 seconds (process running for 6.09)
+2026-04-09 00:21:28.921 INFO  [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-09 00:21:28.921 INFO  [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-04-09 00:21:28.922 INFO  [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-04-09 00:21:29.167 DEBUG [http-nio-8080-exec-1] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.email,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+2026-04-09 00:21:29.206 DEBUG [http-nio-8080-exec-1] org.hibernate.SQL - 
+    insert 
+    into
+        workouts
+        (name, user_id, workout_date) 
+    values
+        (?, ?, ?)
+2026-04-09 00:21:29.232 DEBUG [http-nio-8080-exec-1] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.email,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+2026-04-09 00:21:29.234 INFO  [http-nio-8080-exec-1] c.g.g.a.ServiceExecutionLoggingAspect - Service method WorkoutService.createBulkNonTransactional(..) executed in 122 ms
+2026-04-09 00:21:29.236 ERROR [http-nio-8080-exec-1] c.g.g.e.GlobalExceptionHandler - Bulk workout demo failed. path=/api/v1/workouts/bulk/non-transactional, message=Bulk demo failed because user was not found: 800
+2026-04-09 00:21:39.445 DEBUG [http-nio-8080-exec-3] org.hibernate.SQL - 
+    select
+        w1_0.id,
+        w1_0.name,
+        u1_0.id,
+        u1_0.email,
+        u1_0.username,
+        w1_0.workout_date 
+    from
+        workouts w1_0 
+    left join
+        users u1_0 
+            on u1_0.id=w1_0.user_id
+2026-04-09 00:21:39.451 INFO  [http-nio-8080-exec-3] c.g.g.a.ServiceExecutionLoggingAspect - Service method WorkoutService.findAll() executed in 63 ms
