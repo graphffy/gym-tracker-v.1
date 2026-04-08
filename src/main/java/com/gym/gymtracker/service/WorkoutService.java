@@ -1,5 +1,6 @@
 package com.gym.gymtracker.service;
 
+import com.gym.gymtracker.exception.BulkWorkoutDemoException;
 import com.gym.gymtracker.exception.ResourceNotFoundException;
 import com.gym.gymtracker.dto.WorkoutDto;
 import com.gym.gymtracker.mapper.WorkoutMapper;
@@ -11,7 +12,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 @RequiredArgsConstructor
@@ -38,13 +42,32 @@ public class WorkoutService {
         User user = userRepository.findById(dto.getUserId())
             .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
-        Workout workout = Workout.builder()
-            .name(dto.getName())
-            .workoutDate(dto.getWorkoutDate() != null ? dto.getWorkoutDate() : java.time.LocalDateTime.now())
-            .user(user)
-            .build();
+        Workout workout = buildWorkout(dto, user);
 
         return workoutMapper.toDto(workoutRepository.save(workout));
+    }
+
+    public List<WorkoutDto> createBulkNonTransactional(List<WorkoutDto> dtos) {
+        List<WorkoutDto> createdWorkouts = new ArrayList<>();
+
+        for (WorkoutDto dto : dtos) {
+            validateBulkWorkout(dto);
+            createdWorkouts.add(createBulkWorkout(dto));
+        }
+
+        return createdWorkouts;
+    }
+
+    @Transactional
+    public List<WorkoutDto> createBulkTransactional(List<WorkoutDto> dtos) {
+        List<WorkoutDto> createdWorkouts = new ArrayList<>();
+
+        for (WorkoutDto dto : dtos) {
+            validateBulkWorkout(dto);
+            createdWorkouts.add(createBulkWorkout(dto));
+        }
+
+        return createdWorkouts;
     }
 
     @Transactional
@@ -69,5 +92,27 @@ public class WorkoutService {
     @Transactional
     public void delete(Long id) {
         workoutRepository.deleteById(id);
+    }
+
+    private Workout buildWorkout(WorkoutDto dto, User user) {
+        return Workout.builder()
+            .name(dto.getName())
+            .workoutDate(dto.getWorkoutDate() != null ? dto.getWorkoutDate() : LocalDateTime.now())
+            .user(user)
+            .build();
+    }
+
+    private WorkoutDto createBulkWorkout(WorkoutDto dto) {
+        User user = userRepository.findById(dto.getUserId())
+            .orElseThrow(() -> new BulkWorkoutDemoException("Bulk demo failed because user was not found: "
+                + dto.getUserId()));
+
+        return workoutMapper.toDto(workoutRepository.save(buildWorkout(dto, user)));
+    }
+
+    private void validateBulkWorkout(WorkoutDto dto) {
+        if (dto.getName() != null && "FAIL".equals(dto.getName().trim().toUpperCase(Locale.ROOT))) {
+            throw new BulkWorkoutDemoException("Bulk demo failed on workout name: FAIL");
+        }
     }
 }

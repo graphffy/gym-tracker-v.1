@@ -1,7 +1,5 @@
 package com.gym.gymtracker.service;
 
-import com.gym.gymtracker.dto.BulkWorkoutSetItemDto;
-import com.gym.gymtracker.dto.BulkWorkoutSetRequestDto;
 import com.gym.gymtracker.dto.WorkoutSetDto;
 import com.gym.gymtracker.exception.ResourceNotFoundException;
 import com.gym.gymtracker.mapper.WorkoutSetMapper;
@@ -24,7 +22,6 @@ import org.springframework.data.domain.Pageable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.Map;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -38,7 +35,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -125,93 +121,6 @@ class WorkoutSetServiceTest {
 
         WorkoutSetDto request = WorkoutSetDto.builder().workoutId(10L).exerciseId(20L).weight(80.0).reps(10).build();
         Executable action = () -> workoutSetService.create(request);
-
-        assertThrows(ResourceNotFoundException.class, action);
-    }
-
-    @Test
-    void createBulkNonTransactionalSavesEachItemSeparately() {
-        Workout workout = Workout.builder().id(10L).build();
-        Exercise firstExercise = Exercise.builder().id(20L).build();
-        Exercise secondExercise = Exercise.builder().id(21L).build();
-        BulkWorkoutSetRequestDto request = bulkRequest(10L, List.of(
-            item(20L, 80.0, 10),
-            item(21L, 60.0, 12)));
-        WorkoutSet firstSaved = WorkoutSet.builder().id(1L).workout(workout).exercise(firstExercise).build();
-        WorkoutSet secondSaved = WorkoutSet.builder().id(2L).workout(workout).exercise(secondExercise).build();
-        WorkoutSetDto firstDto = WorkoutSetDto.builder().id(1L).build();
-        WorkoutSetDto secondDto = WorkoutSetDto.builder().id(2L).build();
-
-        when(workoutRepository.findById(10L)).thenReturn(Optional.of(workout));
-        when(exerciseRepository.findAllById(any())).thenReturn(List.of(firstExercise, secondExercise));
-        when(workoutSetRepository.save(any(WorkoutSet.class))).thenReturn(firstSaved, secondSaved);
-        when(workoutSetMapper.toDto(firstSaved)).thenReturn(firstDto);
-        when(workoutSetMapper.toDto(secondSaved)).thenReturn(secondDto);
-
-        List<WorkoutSetDto> result = workoutSetService.createBulkNonTransactional(request);
-
-        assertEquals(List.of(firstDto, secondDto), result);
-        verify(workoutSetRepository, times(2)).save(any(WorkoutSet.class));
-    }
-
-    @Test
-    void createBulkNonTransactionalThrowsWhenWorkoutMissing() {
-        when(workoutRepository.findById(10L)).thenReturn(Optional.empty());
-        BulkWorkoutSetRequestDto request = bulkRequest(10L, List.of(item(20L, 80.0, 10)));
-        Executable action = () -> workoutSetService.createBulkNonTransactional(request);
-
-        assertThrows(ResourceNotFoundException.class, action);
-    }
-
-    @Test
-    void createBulkNonTransactionalThrowsWhenExerciseMissing() {
-        Workout workout = Workout.builder().id(10L).build();
-
-        when(workoutRepository.findById(10L)).thenReturn(Optional.of(workout));
-        when(exerciseRepository.findAllById(any())).thenReturn(List.of());
-
-        BulkWorkoutSetRequestDto request = bulkRequest(10L, List.of(item(20L, 80.0, 10)));
-        Executable action = () -> workoutSetService.createBulkNonTransactional(request);
-
-        assertThrows(ResourceNotFoundException.class, action);
-    }
-
-    @Test
-    void createBulkTransactionalSavesAllAndMapsResult() {
-        Workout workout = Workout.builder().id(10L).build();
-        Exercise exercise = Exercise.builder().id(20L).build();
-        WorkoutSet saved = WorkoutSet.builder().id(1L).workout(workout).exercise(exercise).build();
-        WorkoutSetDto dto = WorkoutSetDto.builder().id(1L).build();
-
-        when(workoutRepository.findById(10L)).thenReturn(Optional.of(workout));
-        when(exerciseRepository.findAllById(any())).thenReturn(List.of(exercise));
-        when(workoutSetRepository.saveAll(any())).thenReturn(List.of(saved));
-        when(workoutSetMapper.toDto(saved)).thenReturn(dto);
-
-        List<WorkoutSetDto> result = workoutSetService.createBulkTransactional(
-            bulkRequest(10L, List.of(item(20L, 80.0, 10))));
-
-        assertEquals(List.of(dto), result);
-    }
-
-    @Test
-    void createBulkTransactionalThrowsWhenWorkoutMissing() {
-        when(workoutRepository.findById(10L)).thenReturn(Optional.empty());
-        BulkWorkoutSetRequestDto request = bulkRequest(10L, List.of(item(20L, 80.0, 10)));
-        Executable action = () -> workoutSetService.createBulkTransactional(request);
-
-        assertThrows(ResourceNotFoundException.class, action);
-    }
-
-    @Test
-    void createBulkTransactionalThrowsWhenExerciseMissing() {
-        Workout workout = Workout.builder().id(10L).build();
-
-        when(workoutRepository.findById(10L)).thenReturn(Optional.of(workout));
-        when(exerciseRepository.findAllById(any())).thenReturn(List.of());
-
-        BulkWorkoutSetRequestDto request = bulkRequest(10L, List.of(item(20L, 80.0, 10)));
-        Executable action = () -> workoutSetService.createBulkTransactional(request);
 
         assertThrows(ResourceNotFoundException.class, action);
     }
@@ -437,23 +346,6 @@ class WorkoutSetServiceTest {
             toStringMethod.invoke(first));
     }
 
-    @Test
-    void getExerciseFromMapOrThrowThrowsWhenExerciseMissing() throws Exception {
-        Method method = WorkoutSetService.class.getDeclaredMethod("getExerciseFromMapOrThrow", Map.class, Long.class);
-        method.setAccessible(true);
-        Executable action = () -> invokeGetExerciseFromMapOrThrow(method, Map.of(), 20L);
-
-        assertThrows(ResourceNotFoundException.class, action);
-    }
-
-    private BulkWorkoutSetRequestDto bulkRequest(Long workoutId, List<BulkWorkoutSetItemDto> items) {
-        return BulkWorkoutSetRequestDto.builder().workoutId(workoutId).sets(items).build();
-    }
-
-    private BulkWorkoutSetItemDto item(Long exerciseId, Double weight, Integer reps) {
-        return BulkWorkoutSetItemDto.builder().exerciseId(exerciseId).weight(weight).reps(reps).build();
-    }
-
     private Object createKey(String username, String exerciseName, int page, int size, boolean nativeQuery)
         throws Exception {
         Class<?> keyClass = Class.forName("com.gym.gymtracker.service.WorkoutSetService$WorkoutSetSearchCacheKey");
@@ -467,15 +359,6 @@ class WorkoutSetServiceTest {
         Field field = WorkoutSetService.class.getDeclaredField("workoutSetSearchIndex");
         field.setAccessible(true);
         field.set(workoutSetService, map);
-    }
-
-    private void invokeGetExerciseFromMapOrThrow(Method method, Map<Long, Exercise> exercisesById, Long exerciseId)
-        throws Throwable {
-        try {
-            method.invoke(workoutSetService, exercisesById, exerciseId);
-        } catch (ReflectiveOperationException ex) {
-            throw ex.getCause();
-        }
     }
 
     private static final class ReturningExistingMap extends ConcurrentHashMap<Object, Page<WorkoutSetDto>> {

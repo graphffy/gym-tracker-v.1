@@ -56,6 +56,22 @@ public class GlobalExceptionHandler {
             .body(buildError(HttpStatus.BAD_REQUEST, ex.getMessage(), request.getRequestURI(), List.of()));
     }
 
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<ApiErrorResponse> handleIllegalState(IllegalStateException ex,
+                                                               HttpServletRequest request) {
+        log.error("Illegal state. path={}, message={}", request.getRequestURI(), ex.getMessage());
+        return ResponseEntity.badRequest()
+            .body(buildError(HttpStatus.BAD_REQUEST, ex.getMessage(), request.getRequestURI(), List.of()));
+    }
+
+    @ExceptionHandler(BulkWorkoutDemoException.class)
+    public ResponseEntity<ApiErrorResponse> handleBulkWorkoutDemo(BulkWorkoutDemoException ex,
+                                                                  HttpServletRequest request) {
+        log.error("Bulk workout demo failed. path={}, message={}", request.getRequestURI(), ex.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(buildError(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), request.getRequestURI(), List.of()));
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiErrorResponse> handleGeneric(Exception ex, HttpServletRequest request) {
         log.error("Unexpected server error. path={}, message={}", request.getRequestURI(), ex.getMessage());

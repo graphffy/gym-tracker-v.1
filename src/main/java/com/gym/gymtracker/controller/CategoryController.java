@@ -22,36 +22,36 @@ import java.util.List;
 @RequestMapping("/api/v1/categories")
 @RequiredArgsConstructor
 @Validated
-@Tag(name = "Categories", description = "Управление категориями упражнений")
+@Tag(name = "Categories", description = "Category management")
 public class CategoryController {
 
     private final CategoryService categoryService;
 
-    @Operation(summary = "Получить все категории")
+    @Operation(summary = "Get all categories")
     @GetMapping
     public List<CategoryDto> getAll() {
         return categoryService.findAll();
     }
 
-    @Operation(summary = "Получить категорию по ID")
+    @Operation(summary = "Get category by id")
     @GetMapping("/{id}")
     public CategoryDto getById(@PathVariable Long id) {
         return categoryService.findById(id);
     }
 
-    @Operation(summary = "Создать категорию")
+    @Operation(summary = "Create category")
     @PostMapping
     public CategoryDto create(@Valid @RequestBody CategoryDto dto) {
         return categoryService.create(dto);
     }
 
-    @Operation(summary = "Обновить категорию")
+    @Operation(summary = "Update category")
     @PutMapping("/{id}")
     public CategoryDto update(@PathVariable Long id, @Valid @RequestBody CategoryDto dto) {
         return categoryService.update(id, dto);
     }
 
-    @Operation(summary = "Удалить категорию")
+    @Operation(summary = "Delete category")
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         categoryService.delete(id);

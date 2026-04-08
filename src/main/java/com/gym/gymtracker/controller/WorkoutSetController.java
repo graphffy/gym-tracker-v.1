@@ -1,6 +1,5 @@
 package com.gym.gymtracker.controller;
 
-import com.gym.gymtracker.dto.BulkWorkoutSetRequestDto;
 import com.gym.gymtracker.dto.WorkoutSetDto;
 import com.gym.gymtracker.service.WorkoutSetService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,24 +25,24 @@ import java.util.List;
 @RequestMapping("/api/v1/sets")
 @RequiredArgsConstructor
 @Validated
-@Tag(name = "Workout Sets", description = "Управление подходами")
+@Tag(name = "Workout Sets", description = "Workout set management")
 public class WorkoutSetController {
 
     private final WorkoutSetService workoutSetService;
 
-    @Operation(summary = "Получить все подходы")
+    @Operation(summary = "Get all workout sets")
     @GetMapping
     public List<WorkoutSetDto> getAll() {
         return workoutSetService.findAll();
     }
 
-    @Operation(summary = "Получить подход по ID")
+    @Operation(summary = "Get workout set by id")
     @GetMapping("/{id}")
     public WorkoutSetDto getById(@PathVariable Long id) {
         return workoutSetService.findById(id);
     }
 
-    @Operation(summary = "Поиск подходов (JPQL)")
+    @Operation(summary = "Search workout sets using JPQL")
     @GetMapping("/search/jpql")
     public Page<WorkoutSetDto> searchByUserAndExerciseJpql(
         @RequestParam(required = false) String username,
@@ -54,7 +53,7 @@ public class WorkoutSetController {
         return workoutSetService.searchByUserAndExerciseJpql(username, exerciseName, page, size);
     }
 
-    @Operation(summary = "Поиск подходов (native SQL)")
+    @Operation(summary = "Search workout sets using native SQL")
     @GetMapping("/search/native")
     public Page<WorkoutSetDto> searchByUserAndExerciseNative(
         @RequestParam(required = false) String username,
@@ -65,31 +64,19 @@ public class WorkoutSetController {
         return workoutSetService.searchByUserAndExerciseNative(username, exerciseName, page, size);
     }
 
-    @Operation(summary = "Создать подход")
+    @Operation(summary = "Create workout set")
     @PostMapping
     public WorkoutSetDto create(@Valid @RequestBody WorkoutSetDto dto) {
         return workoutSetService.create(dto);
     }
 
-    @Operation(summary = "Массово создать подходы без общей транзакции")
-    @PostMapping("/bulk/non-transactional")
-    public List<WorkoutSetDto> createBulkNonTransactional(@Valid @RequestBody BulkWorkoutSetRequestDto request) {
-        return workoutSetService.createBulkNonTransactional(request);
-    }
-
-    @Operation(summary = "Массово создать подходы в одной транзакции")
-    @PostMapping("/bulk/transactional")
-    public List<WorkoutSetDto> createBulkTransactional(@Valid @RequestBody BulkWorkoutSetRequestDto request) {
-        return workoutSetService.createBulkTransactional(request);
-    }
-
-    @Operation(summary = "Обновить подход")
+    @Operation(summary = "Update workout set")
     @PutMapping("/{id}")
     public WorkoutSetDto update(@PathVariable Long id, @Valid @RequestBody WorkoutSetDto dto) {
         return workoutSetService.update(id, dto);
     }
 
-    @Operation(summary = "Удалить подход")
+    @Operation(summary = "Delete workout set")
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         workoutSetService.delete(id);

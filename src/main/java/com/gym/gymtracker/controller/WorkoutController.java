@@ -22,36 +22,48 @@ import java.util.List;
 @RequestMapping("/api/v1/workouts")
 @RequiredArgsConstructor
 @Validated
-@Tag(name = "Workouts", description = "Управление тренировками")
+@Tag(name = "Workouts", description = "Workout management")
 public class WorkoutController {
 
     private final WorkoutService workoutService;
 
-    @Operation(summary = "Получить все тренировки")
+    @Operation(summary = "Get all workouts")
     @GetMapping
     public List<WorkoutDto> getAll() {
         return workoutService.findAll();
     }
 
-    @Operation(summary = "Получить тренировку по ID")
+    @Operation(summary = "Get workout by id")
     @GetMapping("/{id}")
     public WorkoutDto getById(@PathVariable Long id) {
         return workoutService.findById(id);
     }
 
-    @Operation(summary = "Создать тренировку")
+    @Operation(summary = "Create workout")
     @PostMapping
     public WorkoutDto create(@Valid @RequestBody WorkoutDto dto) {
         return workoutService.create(dto);
     }
 
-    @Operation(summary = "Обновить тренировку")
+    @Operation(summary = "Bulk create workouts without a shared transaction")
+    @PostMapping("/bulk/non-transactional")
+    public List<WorkoutDto> createBulkNonTransactional(@Valid @RequestBody List<WorkoutDto> dtos) {
+        return workoutService.createBulkNonTransactional(dtos);
+    }
+
+    @Operation(summary = "Bulk create workouts in a single transaction")
+    @PostMapping("/bulk/transactional")
+    public List<WorkoutDto> createBulkTransactional(@Valid @RequestBody List<WorkoutDto> dtos) {
+        return workoutService.createBulkTransactional(dtos);
+    }
+
+    @Operation(summary = "Update workout")
     @PutMapping("/{id}")
     public WorkoutDto update(@PathVariable Long id, @Valid @RequestBody WorkoutDto dto) {
         return workoutService.update(id, dto);
     }
 
-    @Operation(summary = "Удалить тренировку")
+    @Operation(summary = "Delete workout")
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         workoutService.delete(id);

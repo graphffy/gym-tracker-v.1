@@ -1,6 +1,7 @@
 package com.gym.gymtracker.service;
 
 import com.gym.gymtracker.dto.WorkoutDto;
+import com.gym.gymtracker.exception.BulkWorkoutDemoException;
 import com.gym.gymtracker.exception.ResourceNotFoundException;
 import com.gym.gymtracker.mapper.WorkoutMapper;
 import com.gym.gymtracker.model.User;
@@ -22,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -108,6 +110,83 @@ class WorkoutServiceTest {
         Executable action = () -> workoutService.create(request);
 
         assertThrows(ResourceNotFoundException.class, action);
+    }
+
+    @Test
+    void createBulkNonTransactionalSavesEarlierItemsBeforeFailure() {
+        User user = User.builder().id(1L).build();
+        LocalDateTime date = LocalDateTime.of(2026, 4, 8, 10, 0);
+        Workout saved = Workout.builder().id(5L).name("Chest Day").workoutDate(date).user(user).build();
+        WorkoutDto savedDto = WorkoutDto.builder().id(5L).name("Chest Day").workoutDate(date).userId(1L).build();
+        List<WorkoutDto> request = List.of(
+            WorkoutDto.builder().name("Chest Day").workoutDate(date).userId(1L).build(),
+            WorkoutDto.builder().name("FAIL").workoutDate(date).userId(1L).build());
+
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+        when(workoutRepository.save(any(Workout.class))).thenReturn(saved);
+        when(workoutMapper.toDto(saved)).thenReturn(savedDto);
+
+        Executable action = () -> workoutService.createBulkNonTransactional(request);
+
+        BulkWorkoutDemoException exception = assertThrows(BulkWorkoutDemoException.class, action);
+        assertEquals("Bulk demo failed on workout name: FAIL", exception.getMessage());
+        verify(workoutRepository, times(1)).save(any(Workout.class));
+    }
+
+    @Test
+    void createBulkTransactionalThrowsOnFailure() {
+        LocalDateTime date = LocalDateTime.of(2026, 4, 8, 10, 0);
+        List<WorkoutDto> request = List.of(
+            WorkoutDto.builder().name("Chest Day").workoutDate(date).userId(1L).build(),
+            WorkoutDto.builder().name("FAIL").workoutDate(date).userId(1L).build());
+
+        Executable action = () -> workoutService.createBulkTransactional(request);
+
+        BulkWorkoutDemoException exception = assertThrows(BulkWorkoutDemoException.class, action);
+        assertEquals("Bulk demo failed on workout name: FAIL", exception.getMessage());
+    }
+
+    @Test
+    void createBulkNonTransactionalThrowsDemoExceptionWhenUserMissing() {
+        LocalDateTime date = LocalDateTime.of(2026, 4, 8, 10, 0);
+        User user = User.builder().id(1L).build();
+        Workout saved = Workout.builder().id(5L).name("Chest Day").workoutDate(date).user(user).build();
+        WorkoutDto savedDto = WorkoutDto.builder().id(5L).name("Chest Day").workoutDate(date).userId(1L).build();
+        List<WorkoutDto> request = List.of(
+            WorkoutDto.builder().name("Chest Day").workoutDate(date).userId(1L).build(),
+            WorkoutDto.builder().name("n").workoutDate(date).userId(800L).build());
+
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+        when(userRepository.findById(800L)).thenReturn(Optional.empty());
+        when(workoutRepository.save(any(Workout.class))).thenReturn(saved);
+        when(workoutMapper.toDto(saved)).thenReturn(savedDto);
+
+        Executable action = () -> workoutService.createBulkNonTransactional(request);
+
+        BulkWorkoutDemoException exception = assertThrows(BulkWorkoutDemoException.class, action);
+        assertEquals("Bulk demo failed because user was not found: 800", exception.getMessage());
+        verify(workoutRepository, times(1)).save(any(Workout.class));
+    }
+
+    @Test
+    void createBulkTransactionalThrowsDemoExceptionWhenUserMissing() {
+        LocalDateTime date = LocalDateTime.of(2026, 4, 8, 10, 0);
+        User user = User.builder().id(1L).build();
+        Workout saved = Workout.builder().id(5L).name("Chest Day").workoutDate(date).user(user).build();
+        WorkoutDto savedDto = WorkoutDto.builder().id(5L).name("Chest Day").workoutDate(date).userId(1L).build();
+        List<WorkoutDto> request = List.of(
+            WorkoutDto.builder().name("Chest Day").workoutDate(date).userId(1L).build(),
+            WorkoutDto.builder().name("n").workoutDate(date).userId(800L).build());
+
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+        when(userRepository.findById(800L)).thenReturn(Optional.empty());
+        when(workoutRepository.save(any(Workout.class))).thenReturn(saved);
+        when(workoutMapper.toDto(saved)).thenReturn(savedDto);
+
+        Executable action = () -> workoutService.createBulkTransactional(request);
+
+        BulkWorkoutDemoException exception = assertThrows(BulkWorkoutDemoException.class, action);
+        assertEquals("Bulk demo failed because user was not found: 800", exception.getMessage());
     }
 
     @Test
