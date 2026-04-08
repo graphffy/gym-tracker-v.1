@@ -16,6 +16,8 @@ jobs:
       pull-requests: read
     env:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
+      SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
 
     steps:
       - name: Checkout repository
@@ -37,19 +39,16 @@ jobs:
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
 
-      - name: Prepare Maven wrapper
-        run: |
-          sed -i 's/\r$//' mvnw
-          chmod +x mvnw
-
       - name: Run checks, tests and JaCoCo
-        run: ./mvnw --batch-mode clean verify
+        run: mvn --batch-mode clean verify
 
       - name: SonarCloud scan
-        if: ${{ env.SONAR_TOKEN != '' }}
+        if: ${{ env.SONAR_TOKEN != '' && env.SONAR_ORGANIZATION != '' && env.SONAR_PROJECT_KEY != '' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: >
-          ./mvnw --batch-mode sonar:sonar
+          mvn --batch-mode sonar:sonar
           -Dsonar.token=${SONAR_TOKEN}
           -Dsonar.host.url=https://sonarcloud.io
+          -Dsonar.organization=${SONAR_ORGANIZATION}
+          -Dsonar.projectKey=${SONAR_PROJECT_KEY}
