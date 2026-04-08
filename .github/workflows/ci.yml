@@ -39,15 +39,12 @@ jobs:
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
 
-      - name: Run checks, tests and JaCoCo
-        run: mvn --batch-mode clean verify
-
       - name: SonarCloud scan
         if: ${{ env.SONAR_TOKEN != '' && env.SONAR_ORGANIZATION != '' && env.SONAR_PROJECT_KEY != '' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: >
-          mvn --batch-mode sonar:sonar
+          mvn --batch-mode clean verify sonar:sonar
           -Dsonar.token=${SONAR_TOKEN}
           -Dsonar.host.url=https://sonarcloud.io
           -Dsonar.organization=${SONAR_ORGANIZATION}
