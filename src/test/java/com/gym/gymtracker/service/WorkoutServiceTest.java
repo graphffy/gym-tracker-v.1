@@ -139,6 +139,30 @@ class WorkoutServiceTest {
     }
 
     @Test
+    void createBulkNonTransactionalReturnsCreatedWorkouts() {
+        User user = User.builder().id(1L).build();
+        LocalDateTime firstDate = LocalDateTime.of(2026, 4, 8, 10, 0);
+        LocalDateTime secondDate = LocalDateTime.of(2026, 4, 8, 11, 0);
+        Workout firstSaved = Workout.builder().id(5L).name("Chest Day").workoutDate(firstDate).user(user).build();
+        Workout secondSaved = Workout.builder().id(6L).name("Back Day").workoutDate(secondDate).user(user).build();
+        WorkoutDto firstDto = WorkoutDto.builder().id(5L).name("Chest Day").workoutDate(firstDate).userId(1L).build();
+        WorkoutDto secondDto = WorkoutDto.builder().id(6L).name("Back Day").workoutDate(secondDate).userId(1L).build();
+        List<WorkoutDto> request = List.of(
+            WorkoutDto.builder().name("Chest Day").workoutDate(firstDate).userId(1L).build(),
+            WorkoutDto.builder().name("Back Day").workoutDate(secondDate).userId(1L).build());
+
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+        when(workoutRepository.save(any(Workout.class))).thenReturn(firstSaved, secondSaved);
+        when(workoutMapper.toDto(firstSaved)).thenReturn(firstDto);
+        when(workoutMapper.toDto(secondSaved)).thenReturn(secondDto);
+
+        List<WorkoutDto> result = workoutService.createBulkNonTransactional(request);
+
+        assertEquals(List.of(firstDto, secondDto), result);
+        verify(workoutRepository, times(2)).save(any(Workout.class));
+    }
+
+    @Test
     void createBulkTransactionalThrowsOnFailure() {
         LocalDateTime date = LocalDateTime.of(2026, 4, 8, 10, 0);
         List<WorkoutDto> request = List.of(
@@ -149,6 +173,30 @@ class WorkoutServiceTest {
 
         BulkWorkoutDemoException exception = assertThrows(BulkWorkoutDemoException.class, action);
         assertEquals("Bulk demo failed on workout name: FAIL (transactional)", exception.getMessage());
+    }
+
+    @Test
+    void createBulkTransactionalReturnsCreatedWorkouts() {
+        User user = User.builder().id(1L).build();
+        LocalDateTime firstDate = LocalDateTime.of(2026, 4, 8, 10, 0);
+        LocalDateTime secondDate = LocalDateTime.of(2026, 4, 8, 11, 0);
+        Workout firstSaved = Workout.builder().id(5L).name("Chest Day").workoutDate(firstDate).user(user).build();
+        Workout secondSaved = Workout.builder().id(6L).name("Back Day").workoutDate(secondDate).user(user).build();
+        WorkoutDto firstDto = WorkoutDto.builder().id(5L).name("Chest Day").workoutDate(firstDate).userId(1L).build();
+        WorkoutDto secondDto = WorkoutDto.builder().id(6L).name("Back Day").workoutDate(secondDate).userId(1L).build();
+        List<WorkoutDto> request = List.of(
+            WorkoutDto.builder().name("Chest Day").workoutDate(firstDate).userId(1L).build(),
+            WorkoutDto.builder().name("Back Day").workoutDate(secondDate).userId(1L).build());
+
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+        when(workoutRepository.save(any(Workout.class))).thenReturn(firstSaved, secondSaved);
+        when(workoutMapper.toDto(firstSaved)).thenReturn(firstDto);
+        when(workoutMapper.toDto(secondSaved)).thenReturn(secondDto);
+
+        List<WorkoutDto> result = workoutService.createBulkTransactional(request);
+
+        assertEquals(List.of(firstDto, secondDto), result);
+        verify(workoutRepository, times(2)).save(any(Workout.class));
     }
 
     @Test
