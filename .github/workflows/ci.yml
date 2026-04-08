@@ -37,6 +37,11 @@ jobs:
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
 
+      - name: Prepare Maven wrapper
+        run: |
+          sed -i 's/\r$//' mvnw
+          chmod +x mvnw
+
       - name: Run checks, tests and JaCoCo
         run: ./mvnw --batch-mode clean verify
 
