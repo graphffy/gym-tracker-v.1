@@ -1,7 +1,9 @@
 package com.gym.gymtracker.service;
 
-import com.gym.gymtracker.exception.ResourceNotFoundException;
+import com.gym.gymtracker.dto.BulkWorkoutSetItemDto;
+import com.gym.gymtracker.dto.BulkWorkoutSetRequestDto;
 import com.gym.gymtracker.dto.WorkoutSetDto;
+import com.gym.gymtracker.exception.ResourceNotFoundException;
 import com.gym.gymtracker.mapper.WorkoutSetMapper;
 import com.gym.gymtracker.model.Exercise;
 import com.gym.gymtracker.model.Workout;
@@ -21,7 +23,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
@@ -53,21 +57,48 @@ public class WorkoutSetService {
 
     @Transactional
     public WorkoutSetDto create(WorkoutSetDto dto) {
-        Workout workout = workoutRepository.findById(dto.getWorkoutId())
-            .orElseThrow(() -> new ResourceNotFoundException("Workout not found"));
-        Exercise exercise = exerciseRepository.findById(dto.getExerciseId())
-            .orElseThrow(() -> new ResourceNotFoundException("Exercise not found"));
-
-        WorkoutSet workoutSet = WorkoutSet.builder()
-            .weight(dto.getWeight())
-            .reps(dto.getReps())
-            .workout(workout)
-            .exercise(exercise)
-            .build();
+        WorkoutSet workoutSet = buildWorkoutSet(
+            dto.getWeight(),
+            dto.getReps(),
+            getWorkoutOrThrow(dto.getWorkoutId()),
+            getExerciseOrThrow(dto.getExerciseId()));
 
         WorkoutSetDto created = workoutSetMapper.toDto(workoutSetRepository.save(workoutSet));
         invalidateWorkoutSetSearchIndex();
         return created;
+    }
+
+    public List<WorkoutSetDto> createBulkNonTransactional(BulkWorkoutSetRequestDto request) {
+        Workout workout = getWorkoutOrThrow(request.getWorkoutId());
+        Map<Long, Exercise> exercisesById = getExercisesById(request.getSets());
+
+        List<WorkoutSetDto> createdSets = request.getSets().stream()
+            .map(item -> createAndMapSingleSet(workout, exercisesById, item))
+            .collect(Collectors.toList());
+
+        invalidateWorkoutSetSearchIndex();
+        return createdSets;
+    }
+
+    @Transactional
+    public List<WorkoutSetDto> createBulkTransactional(BulkWorkoutSetRequestDto request) {
+        Workout workout = getWorkoutOrThrow(request.getWorkoutId());
+        Map<Long, Exercise> exercisesById = getExercisesById(request.getSets());
+
+        List<WorkoutSet> setsToSave = request.getSets().stream()
+            .map(item -> buildWorkoutSet(
+                item.getWeight(),
+                item.getReps(),
+                workout,
+                getExerciseFromMapOrThrow(exercisesById, item.getExerciseId())))
+            .collect(Collectors.toList());
+
+        List<WorkoutSetDto> createdSets = workoutSetRepository.saveAll(setsToSave).stream()
+            .map(workoutSetMapper::toDto)
+            .collect(Collectors.toList());
+
+        invalidateWorkoutSetSearchIndex();
+        return createdSets;
     }
 
     @Transactional
@@ -79,15 +110,11 @@ public class WorkoutSetService {
         existingSet.setReps(dto.getReps());
 
         if (dto.getWorkoutId() != null && !dto.getWorkoutId().equals(existingSet.getWorkout().getId())) {
-            Workout newWorkout = workoutRepository.findById(dto.getWorkoutId())
-                .orElseThrow(() -> new ResourceNotFoundException("Workout not found"));
-            existingSet.setWorkout(newWorkout);
+            existingSet.setWorkout(getWorkoutOrThrow(dto.getWorkoutId()));
         }
 
         if (dto.getExerciseId() != null && !dto.getExerciseId().equals(existingSet.getExercise().getId())) {
-            Exercise newExercise = exerciseRepository.findById(dto.getExerciseId())
-                .orElseThrow(() -> new ResourceNotFoundException("Exercise not found"));
-            existingSet.setExercise(newExercise);
+            existingSet.setExercise(getExerciseOrThrow(dto.getExerciseId()));
         }
 
         WorkoutSetDto updated = workoutSetMapper.toDto(workoutSetRepository.save(existingSet));
@@ -153,6 +180,58 @@ public class WorkoutSetService {
             .map(workoutSetMapper::toDto)
             .collect(Collectors.toList());
         return new PageImpl<>(content, pageable, pageResult.getTotalElements());
+    }
+
+    private Workout getWorkoutOrThrow(Long workoutId) {
+        return workoutRepository.findById(workoutId)
+            .orElseThrow(() -> new ResourceNotFoundException("Workout not found"));
+    }
+
+    private Exercise getExerciseOrThrow(Long exerciseId) {
+        return exerciseRepository.findById(exerciseId)
+            .orElseThrow(() -> new ResourceNotFoundException("Exercise not found"));
+    }
+
+    private Map<Long, Exercise> getExercisesById(List<BulkWorkoutSetItemDto> items) {
+        Set<Long> exerciseIds = items.stream()
+            .map(BulkWorkoutSetItemDto::getExerciseId)
+            .collect(Collectors.toSet());
+
+        Map<Long, Exercise> exercisesById = exerciseRepository.findAllById(exerciseIds).stream()
+            .collect(Collectors.toMap(Exercise::getId, exercise -> exercise));
+
+        exerciseIds.stream()
+            .filter(id -> !exercisesById.containsKey(id))
+            .findFirst()
+            .ifPresent(id -> {
+                throw new ResourceNotFoundException("Exercise not found");
+            });
+
+        return exercisesById;
+    }
+
+    private Exercise getExerciseFromMapOrThrow(Map<Long, Exercise> exercisesById, Long exerciseId) {
+        return java.util.Optional.ofNullable(exercisesById.get(exerciseId))
+            .orElseThrow(() -> new ResourceNotFoundException("Exercise not found"));
+    }
+
+    private WorkoutSet buildWorkoutSet(Double weight, Integer reps, Workout workout, Exercise exercise) {
+        return WorkoutSet.builder()
+            .weight(weight)
+            .reps(reps)
+            .workout(workout)
+            .exercise(exercise)
+            .build();
+    }
+
+    private WorkoutSetDto createAndMapSingleSet(Workout workout, Map<Long, Exercise> exercisesById,
+                                                BulkWorkoutSetItemDto item) {
+        WorkoutSet savedSet = workoutSetRepository.save(buildWorkoutSet(
+            item.getWeight(),
+            item.getReps(),
+            workout,
+            getExerciseFromMapOrThrow(exercisesById, item.getExerciseId())));
+        return workoutSetMapper.toDto(savedSet);
     }
 
     private void invalidateWorkoutSetSearchIndex() {

@@ -33,11 +33,9 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public UserDto findByUsername(String username) {
-        User user = userRepository.findByUsername(username);
-        if (user == null) {
-            throw new ResourceNotFoundException("User not found with username: " + username);
-        }
-        return userMapper.toDto(user);
+        return java.util.Optional.ofNullable(userRepository.findByUsername(username))
+            .map(userMapper::toDto)
+            .orElseThrow(() -> new ResourceNotFoundException("User not found with username: " + username));
     }
 
     @Transactional(readOnly = true)

@@ -1,5 +1,6 @@
 package com.gym.gymtracker.controller;
 
+import com.gym.gymtracker.dto.BulkWorkoutSetRequestDto;
 import com.gym.gymtracker.dto.WorkoutSetDto;
 import com.gym.gymtracker.service.WorkoutSetService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -68,6 +69,18 @@ public class WorkoutSetController {
     @PostMapping
     public WorkoutSetDto create(@Valid @RequestBody WorkoutSetDto dto) {
         return workoutSetService.create(dto);
+    }
+
+    @Operation(summary = "Массово создать подходы без общей транзакции")
+    @PostMapping("/bulk/non-transactional")
+    public List<WorkoutSetDto> createBulkNonTransactional(@Valid @RequestBody BulkWorkoutSetRequestDto request) {
+        return workoutSetService.createBulkNonTransactional(request);
+    }
+
+    @Operation(summary = "Массово создать подходы в одной транзакции")
+    @PostMapping("/bulk/transactional")
+    public List<WorkoutSetDto> createBulkTransactional(@Valid @RequestBody BulkWorkoutSetRequestDto request) {
+        return workoutSetService.createBulkTransactional(request);
     }
 
     @Operation(summary = "Обновить подход")
