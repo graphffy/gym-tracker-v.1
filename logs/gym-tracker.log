@@ -1,0 +1,351 @@
+2026-04-06 19:38:21.334 DEBUG [http-nio-8080-exec-9] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.email,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+2026-04-06 19:38:21.362 DEBUG [http-nio-8080-exec-9] org.hibernate.SQL - 
+    select
+        w1_0.user_id,
+        w1_0.id,
+        w1_0.name,
+        w1_0.workout_date 
+    from
+        workouts w1_0 
+    where
+        w1_0.user_id=?
+2026-04-06 19:38:21.365 INFO  [http-nio-8080-exec-9] c.g.g.a.ServiceExecutionLoggingAspect - Service method UserService.findById(..) executed in 31 ms
+2026-04-06 19:38:28.529 DEBUG [http-nio-8080-exec-10] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.email,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+2026-04-06 19:38:28.531 DEBUG [http-nio-8080-exec-10] org.hibernate.SQL - 
+    select
+        w1_0.user_id,
+        w1_0.id,
+        w1_0.name,
+        w1_0.workout_date 
+    from
+        workouts w1_0 
+    where
+        w1_0.user_id=?
+2026-04-06 19:38:28.531 INFO  [http-nio-8080-exec-10] c.g.g.a.ServiceExecutionLoggingAspect - Service method UserService.findById(..) executed in 2 ms
+2026-04-06 19:39:03.069 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-06 19:39:03.071 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-04-06 19:39:03.078 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-04-06 19:39:05.696 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2026-04-06 19:39:05.734 INFO  [main] c.g.gymtracker.GymTrackerApplication - Starting GymTrackerApplication using Java 17.0.18 with PID 18720 (C:\Users\graph\IdeaProjects\gym-tracker\target\classes started by graph in C:\Users\graph\IdeaProjects\gym-tracker)
+2026-04-06 19:39:05.734 DEBUG [main] c.g.gymtracker.GymTrackerApplication - Running with Spring Boot v3.2.3, Spring v6.1.4
+2026-04-06 19:39:05.735 INFO  [main] c.g.gymtracker.GymTrackerApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-06 19:39:06.415 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-06 19:39:06.474 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 52 ms. Found 5 JPA repository interfaces.
+2026-04-06 19:39:07.017 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-04-06 19:39:07.024 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-04-06 19:39:07.025 INFO  [main] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-06 19:39:07.025 INFO  [main] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-04-06 19:39:07.071 INFO  [main] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-04-06 19:39:07.071 INFO  [main] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1296 ms
+2026-04-06 19:39:07.191 INFO  [main] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-06 19:39:07.242 INFO  [main] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-04-06 19:39:07.270 INFO  [main] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-04-06 19:39:07.475 INFO  [main] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-06 19:39:07.507 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-04-06 19:39:07.654 INFO  [main] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@194037f9
+2026-04-06 19:39:07.655 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-04-06 19:39:07.683 WARN  [main] org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-06 19:39:08.581 INFO  [main] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-06 19:39:08.661 INFO  [main] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-06 19:39:09.115 INFO  [main] o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-06 19:39:09.671 WARN  [main] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-06 19:39:10.089 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-04-06 19:39:10.104 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-04-06 19:39:10.113 INFO  [main] c.g.gymtracker.GymTrackerApplication - Started GymTrackerApplication in 4.839 seconds (process running for 5.428)
+2026-04-06 19:39:15.466 INFO  [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-06 19:39:15.466 INFO  [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-04-06 19:39:15.467 INFO  [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-04-06 19:39:15.542 DEBUG [http-nio-8080-exec-1] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.email,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+2026-04-06 19:39:15.563 DEBUG [http-nio-8080-exec-1] org.hibernate.SQL - 
+    select
+        w1_0.user_id,
+        w1_0.id,
+        w1_0.name,
+        w1_0.workout_date 
+    from
+        workouts w1_0 
+    where
+        w1_0.user_id=?
+2026-04-06 19:39:15.567 INFO  [http-nio-8080-exec-1] c.g.g.a.ServiceExecutionLoggingAspect - Service method UserService.findById(..) executed in 55 ms
+2026-04-06 19:39:41.315 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-06 19:39:41.318 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-04-06 19:39:41.323 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-04-06 19:39:43.460 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2026-04-06 19:39:43.500 INFO  [main] c.g.gymtracker.GymTrackerApplication - Starting GymTrackerApplication using Java 17.0.18 with PID 21784 (C:\Users\graph\IdeaProjects\gym-tracker\target\classes started by graph in C:\Users\graph\IdeaProjects\gym-tracker)
+2026-04-06 19:39:43.500 DEBUG [main] c.g.gymtracker.GymTrackerApplication - Running with Spring Boot v3.2.3, Spring v6.1.4
+2026-04-06 19:39:43.501 INFO  [main] c.g.gymtracker.GymTrackerApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-06 19:39:44.078 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-06 19:39:44.135 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 46 ms. Found 5 JPA repository interfaces.
+2026-04-06 19:39:44.607 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-04-06 19:39:44.614 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-04-06 19:39:44.615 INFO  [main] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-06 19:39:44.615 INFO  [main] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-04-06 19:39:44.662 INFO  [main] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-04-06 19:39:44.663 INFO  [main] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1123 ms
+2026-04-06 19:39:44.781 INFO  [main] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-06 19:39:44.835 INFO  [main] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-04-06 19:39:44.865 INFO  [main] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-04-06 19:39:45.035 INFO  [main] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-06 19:39:45.058 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-04-06 19:39:45.185 INFO  [main] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@710afd47
+2026-04-06 19:39:45.186 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-04-06 19:39:45.211 WARN  [main] org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-06 19:39:46.051 INFO  [main] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-06 19:39:46.133 INFO  [main] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-06 19:39:46.627 INFO  [main] o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-06 19:39:47.105 WARN  [main] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-06 19:39:47.495 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-04-06 19:39:47.510 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-04-06 19:39:47.517 INFO  [main] c.g.gymtracker.GymTrackerApplication - Started GymTrackerApplication in 4.448 seconds (process running for 5.036)
+2026-04-06 19:39:55.322 INFO  [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-06 19:39:55.322 INFO  [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-04-06 19:39:55.323 INFO  [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-04-06 19:39:55.394 DEBUG [http-nio-8080-exec-1] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.email,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+2026-04-06 19:39:55.420 DEBUG [http-nio-8080-exec-1] org.hibernate.SQL - 
+    select
+        w1_0.user_id,
+        w1_0.id,
+        w1_0.name,
+        w1_0.workout_date 
+    from
+        workouts w1_0 
+    where
+        w1_0.user_id=?
+2026-04-06 19:39:55.424 INFO  [http-nio-8080-exec-1] c.g.g.a.ServiceExecutionLoggingAspect - Service method UserService.findById(..) executed in 59 ms
+2026-04-06 19:40:12.973 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-06 19:40:12.974 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-04-06 19:40:12.977 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-04-06 19:40:27.917 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2026-04-06 19:40:27.954 INFO  [main] c.g.gymtracker.GymTrackerApplication - Starting GymTrackerApplication using Java 17.0.18 with PID 17748 (C:\Users\graph\IdeaProjects\gym-tracker\target\classes started by graph in C:\Users\graph\IdeaProjects\gym-tracker)
+2026-04-06 19:40:27.954 DEBUG [main] c.g.gymtracker.GymTrackerApplication - Running with Spring Boot v3.2.3, Spring v6.1.4
+2026-04-06 19:40:27.955 INFO  [main] c.g.gymtracker.GymTrackerApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-06 19:40:28.558 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-06 19:40:28.604 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 40 ms. Found 5 JPA repository interfaces.
+2026-04-06 19:40:29.076 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-04-06 19:40:29.083 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-04-06 19:40:29.084 INFO  [main] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-06 19:40:29.084 INFO  [main] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-04-06 19:40:29.135 INFO  [main] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-04-06 19:40:29.135 INFO  [main] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1144 ms
+2026-04-06 19:40:29.253 INFO  [main] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-06 19:40:29.306 INFO  [main] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-04-06 19:40:29.334 INFO  [main] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-04-06 19:40:29.509 INFO  [main] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-06 19:40:29.533 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-04-06 19:40:29.666 INFO  [main] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@6b2e9db2
+2026-04-06 19:40:29.667 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-04-06 19:40:29.694 WARN  [main] org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-06 19:40:30.523 INFO  [main] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-06 19:40:30.600 INFO  [main] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-06 19:40:31.054 INFO  [main] o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-06 19:40:31.595 WARN  [main] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-06 19:40:31.997 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-04-06 19:40:32.010 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-04-06 19:40:32.018 INFO  [main] c.g.gymtracker.GymTrackerApplication - Started GymTrackerApplication in 4.529 seconds (process running for 5.214)
+2026-04-06 19:40:48.390 INFO  [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-06 19:40:48.390 INFO  [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-04-06 19:40:48.391 INFO  [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-04-06 19:40:48.472 DEBUG [http-nio-8080-exec-1] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.email,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+2026-04-06 19:40:48.494 DEBUG [http-nio-8080-exec-1] org.hibernate.SQL - 
+    select
+        w1_0.user_id,
+        w1_0.id,
+        w1_0.name,
+        w1_0.workout_date 
+    from
+        workouts w1_0 
+    where
+        w1_0.user_id=?
+2026-04-06 19:40:48.499 INFO  [http-nio-8080-exec-1] c.g.g.a.ServiceExecutionLoggingAspect - Service method UserService.findById(..) executed in 65 ms
+2026-04-06 19:41:07.349 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-06 19:41:07.352 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-04-06 19:41:07.355 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-04-06 19:41:09.154 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2026-04-06 19:41:09.194 INFO  [main] c.g.gymtracker.GymTrackerApplication - Starting GymTrackerApplication using Java 17.0.18 with PID 21928 (C:\Users\graph\IdeaProjects\gym-tracker\target\classes started by graph in C:\Users\graph\IdeaProjects\gym-tracker)
+2026-04-06 19:41:09.195 DEBUG [main] c.g.gymtracker.GymTrackerApplication - Running with Spring Boot v3.2.3, Spring v6.1.4
+2026-04-06 19:41:09.195 INFO  [main] c.g.gymtracker.GymTrackerApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-06 19:41:09.820 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-06 19:41:09.868 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 41 ms. Found 5 JPA repository interfaces.
+2026-04-06 19:41:10.341 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-04-06 19:41:10.349 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-04-06 19:41:10.350 INFO  [main] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-06 19:41:10.350 INFO  [main] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-04-06 19:41:10.398 INFO  [main] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-04-06 19:41:10.398 INFO  [main] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1167 ms
+2026-04-06 19:41:10.515 INFO  [main] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-06 19:41:10.566 INFO  [main] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-04-06 19:41:10.594 INFO  [main] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-04-06 19:41:10.764 INFO  [main] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-06 19:41:10.787 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-04-06 19:41:10.914 INFO  [main] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@21a9f95b
+2026-04-06 19:41:10.915 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-04-06 19:41:10.940 WARN  [main] org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-06 19:41:11.758 INFO  [main] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-06 19:41:11.838 INFO  [main] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-06 19:41:12.291 INFO  [main] o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-06 19:41:12.765 WARN  [main] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-06 19:41:13.149 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-04-06 19:41:13.162 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-04-06 19:41:13.170 INFO  [main] c.g.gymtracker.GymTrackerApplication - Started GymTrackerApplication in 4.408 seconds (process running for 4.964)
+2026-04-06 19:41:19.563 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-06 19:41:19.565 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-04-06 19:41:19.568 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-04-06 19:43:49.053 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2026-04-06 19:43:49.095 INFO  [main] c.g.gymtracker.GymTrackerApplication - Starting GymTrackerApplication using Java 17.0.18 with PID 3124 (C:\Users\graph\IdeaProjects\gym-tracker\target\classes started by graph in C:\Users\graph\IdeaProjects\gym-tracker)
+2026-04-06 19:43:49.096 DEBUG [main] c.g.gymtracker.GymTrackerApplication - Running with Spring Boot v3.2.3, Spring v6.1.4
+2026-04-06 19:43:49.096 INFO  [main] c.g.gymtracker.GymTrackerApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-06 19:43:49.726 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-06 19:43:49.775 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 43 ms. Found 5 JPA repository interfaces.
+2026-04-06 19:43:50.267 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-04-06 19:43:50.275 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-04-06 19:43:50.276 INFO  [main] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-06 19:43:50.276 INFO  [main] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-04-06 19:43:50.329 INFO  [main] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-04-06 19:43:50.329 INFO  [main] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1188 ms
+2026-04-06 19:43:50.451 INFO  [main] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-06 19:43:50.514 INFO  [main] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-04-06 19:43:50.545 INFO  [main] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-04-06 19:43:50.718 INFO  [main] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-06 19:43:50.745 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-04-06 19:43:50.873 INFO  [main] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@39a8e2fa
+2026-04-06 19:43:50.874 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-04-06 19:43:50.899 WARN  [main] org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-06 19:43:51.756 INFO  [main] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-06 19:43:51.856 INFO  [main] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-06 19:43:52.479 INFO  [main] o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-06 19:43:52.993 WARN  [main] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-06 19:43:53.398 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-04-06 19:43:53.413 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-04-06 19:43:53.419 INFO  [main] c.g.gymtracker.GymTrackerApplication - Started GymTrackerApplication in 4.836 seconds (process running for 5.442)
+2026-04-06 19:44:03.682 INFO  [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-06 19:44:03.682 INFO  [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-04-06 19:44:03.683 INFO  [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-04-06 19:44:04.335 INFO  [http-nio-8080-exec-5] o.s.api.AbstractOpenApiResource - Init duration for springdoc-openapi is: 381 ms
+2026-04-06 19:44:13.148 DEBUG [http-nio-8080-exec-4] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.email,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+2026-04-06 19:44:13.169 DEBUG [http-nio-8080-exec-4] org.hibernate.SQL - 
+    select
+        w1_0.user_id,
+        w1_0.id,
+        w1_0.name,
+        w1_0.workout_date 
+    from
+        workouts w1_0 
+    where
+        w1_0.user_id=?
+2026-04-06 19:44:13.171 INFO  [http-nio-8080-exec-4] c.g.g.a.ServiceExecutionLoggingAspect - Service method UserService.findById(..) executed in 53 ms
+2026-04-06 19:44:19.142 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-06 19:44:19.144 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-04-06 19:44:19.152 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-04-06 19:45:54.570 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2026-04-06 19:45:54.611 INFO  [main] c.g.gymtracker.GymTrackerApplication - Starting GymTrackerApplication using Java 17.0.18 with PID 21860 (C:\Users\graph\IdeaProjects\gym-tracker\target\classes started by graph in C:\Users\graph\IdeaProjects\gym-tracker)
+2026-04-06 19:45:54.611 DEBUG [main] c.g.gymtracker.GymTrackerApplication - Running with Spring Boot v3.2.3, Spring v6.1.4
+2026-04-06 19:45:54.612 INFO  [main] c.g.gymtracker.GymTrackerApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-06 19:45:55.223 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-06 19:45:55.280 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 50 ms. Found 5 JPA repository interfaces.
+2026-04-06 19:45:55.763 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-04-06 19:45:55.770 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-04-06 19:45:55.772 INFO  [main] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-06 19:45:55.772 INFO  [main] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-04-06 19:45:55.832 INFO  [main] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-04-06 19:45:55.832 INFO  [main] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1177 ms
+2026-04-06 19:45:55.946 INFO  [main] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-06 19:45:56.008 INFO  [main] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-04-06 19:45:56.040 INFO  [main] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-04-06 19:45:56.207 INFO  [main] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-06 19:45:56.231 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-04-06 19:45:56.366 INFO  [main] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@ff2266c
+2026-04-06 19:45:56.368 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-04-06 19:45:56.395 WARN  [main] org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-06 19:45:57.218 INFO  [main] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-06 19:45:57.295 INFO  [main] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-06 19:45:57.782 INFO  [main] o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-06 19:45:58.258 WARN  [main] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-06 19:45:58.636 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-04-06 19:45:58.652 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-04-06 19:45:58.661 INFO  [main] c.g.gymtracker.GymTrackerApplication - Started GymTrackerApplication in 4.545 seconds (process running for 5.061)
+2026-04-06 19:46:08.352 INFO  [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-06 19:46:08.352 INFO  [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-04-06 19:46:08.352 INFO  [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2026-04-06 19:46:09.019 INFO  [http-nio-8080-exec-4] o.s.api.AbstractOpenApiResource - Init duration for springdoc-openapi is: 387 ms
+2026-04-06 19:46:13.308 INFO  [http-nio-8080-exec-5] c.g.g.a.ServiceExecutionLoggingAspect - Service method UserService.findById(..) executed in 54 ms
+2026-04-06 19:46:28.550 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-06 19:46:28.551 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-04-06 19:46:28.554 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-04-06 19:46:48.739 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2026-04-06 19:46:48.778 INFO  [main] c.g.gymtracker.GymTrackerApplication - Starting GymTrackerApplication using Java 17.0.18 with PID 2448 (C:\Users\graph\IdeaProjects\gym-tracker\target\classes started by graph in C:\Users\graph\IdeaProjects\gym-tracker)
+2026-04-06 19:46:48.778 DEBUG [main] c.g.gymtracker.GymTrackerApplication - Running with Spring Boot v3.2.3, Spring v6.1.4
+2026-04-06 19:46:48.779 INFO  [main] c.g.gymtracker.GymTrackerApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-06 19:46:49.377 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-06 19:46:49.422 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 40 ms. Found 5 JPA repository interfaces.
+2026-04-06 19:46:49.923 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-04-06 19:46:49.931 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-04-06 19:46:49.933 INFO  [main] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-06 19:46:49.933 INFO  [main] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-04-06 19:46:49.987 INFO  [main] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-04-06 19:46:49.988 INFO  [main] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1169 ms
+2026-04-06 19:46:50.112 INFO  [main] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-06 19:46:50.176 INFO  [main] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-04-06 19:46:50.203 INFO  [main] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-04-06 19:46:50.373 INFO  [main] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-06 19:46:50.396 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-04-06 19:46:50.530 INFO  [main] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@69499c6f
+2026-04-06 19:46:50.531 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-04-06 19:46:50.556 WARN  [main] org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-06 19:46:51.380 INFO  [main] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-06 19:46:51.457 INFO  [main] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-06 19:46:51.905 INFO  [main] o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-06 19:46:52.397 WARN  [main] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-06 19:46:52.799 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-04-06 19:46:52.816 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-04-06 19:46:52.825 INFO  [main] c.g.gymtracker.GymTrackerApplication - Started GymTrackerApplication in 4.485 seconds (process running for 5.035)
+2026-04-06 19:46:57.080 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-06 19:46:57.082 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-04-06 19:46:57.087 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
