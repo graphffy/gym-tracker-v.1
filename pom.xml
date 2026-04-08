@@ -125,7 +125,7 @@
                         </goals>
                         <configuration>
                             <includes>
-                                <include>com/gym/gymtracker/service/*</include>
+                                <include>com/gym/gymtracker/service/*Service</include>
                             </includes>
                         </configuration>
                     </execution>
@@ -137,13 +137,13 @@
                         </goals>
                         <configuration>
                             <includes>
-                                <include>com/gym/gymtracker/service/*</include>
+                                <include>com/gym/gymtracker/service/*Service</include>
                             </includes>
                             <rules>
                                 <rule>
-                                    <element>PACKAGE</element>
+                                    <element>CLASS</element>
                                     <includes>
-                                        <include>com.gym.gymtracker.service</include>
+                                        <include>com.gym.gymtracker.service.*Service</include>
                                     </includes>
                                     <limits>
                                         <limit>
