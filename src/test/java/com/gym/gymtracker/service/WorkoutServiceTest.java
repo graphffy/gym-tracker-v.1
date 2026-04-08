@@ -117,7 +117,12 @@ class WorkoutServiceTest {
         User user = User.builder().id(1L).build();
         LocalDateTime date = LocalDateTime.of(2026, 4, 8, 10, 0);
         Workout saved = Workout.builder().id(5L).name("Chest Day").workoutDate(date).user(user).build();
-        WorkoutDto savedDto = WorkoutDto.builder().id(5L).name("Chest Day").workoutDate(date).userId(1L).build();
+        WorkoutDto savedDto = WorkoutDto.builder()
+            .id(5L)
+            .name("Chest Day")
+            .workoutDate(date)
+            .userId(1L)
+            .build();
         List<WorkoutDto> request = List.of(
             WorkoutDto.builder().name("Chest Day").workoutDate(date).userId(1L).build(),
             WorkoutDto.builder().name("FAIL").workoutDate(date).userId(1L).build());
@@ -151,7 +156,12 @@ class WorkoutServiceTest {
         LocalDateTime date = LocalDateTime.of(2026, 4, 8, 10, 0);
         User user = User.builder().id(1L).build();
         Workout saved = Workout.builder().id(5L).name("Chest Day").workoutDate(date).user(user).build();
-        WorkoutDto savedDto = WorkoutDto.builder().id(5L).name("Chest Day").workoutDate(date).userId(1L).build();
+        WorkoutDto savedDto = WorkoutDto.builder()
+            .id(5L)
+            .name("Chest Day")
+            .workoutDate(date)
+            .userId(1L)
+            .build();
         List<WorkoutDto> request = List.of(
             WorkoutDto.builder().name("Chest Day").workoutDate(date).userId(1L).build(),
             WorkoutDto.builder().name("n").workoutDate(date).userId(800L).build());
@@ -173,7 +183,12 @@ class WorkoutServiceTest {
         LocalDateTime date = LocalDateTime.of(2026, 4, 8, 10, 0);
         User user = User.builder().id(1L).build();
         Workout saved = Workout.builder().id(5L).name("Chest Day").workoutDate(date).user(user).build();
-        WorkoutDto savedDto = WorkoutDto.builder().id(5L).name("Chest Day").workoutDate(date).userId(1L).build();
+        WorkoutDto savedDto = WorkoutDto.builder()
+            .id(5L)
+            .name("Chest Day")
+            .workoutDate(date)
+            .userId(1L)
+            .build();
         List<WorkoutDto> request = List.of(
             WorkoutDto.builder().name("Chest Day").workoutDate(date).userId(1L).build(),
             WorkoutDto.builder().name("n").workoutDate(date).userId(800L).build());

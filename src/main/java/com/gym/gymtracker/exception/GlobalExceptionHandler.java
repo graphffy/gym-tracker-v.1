@@ -65,11 +65,17 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(BulkWorkoutDemoException.class)
-    public ResponseEntity<ApiErrorResponse> handleBulkWorkoutDemo(BulkWorkoutDemoException ex,
-                                                                  HttpServletRequest request) {
+    public ResponseEntity<ApiErrorResponse> handleBulkWorkoutDemo(
+        BulkWorkoutDemoException ex,
+        HttpServletRequest request
+    ) {
         log.error("Bulk workout demo failed. path={}, message={}", request.getRequestURI(), ex.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-            .body(buildError(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), request.getRequestURI(), List.of()));
+            .body(buildError(
+                HttpStatus.INTERNAL_SERVER_ERROR,
+                ex.getMessage(),
+                request.getRequestURI(),
+                List.of()));
     }
 
     @ExceptionHandler(Exception.class)

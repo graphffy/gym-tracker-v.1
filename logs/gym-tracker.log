@@ -1,58 +1,34 @@
-2026-04-08 23:52:41.381 DEBUG [http-nio-8080-exec-7] org.hibernate.SQL - 
-    select
-        u1_0.id,
-        u1_0.email,
-        u1_0.username 
-    from
-        users u1_0 
-    where
-        u1_0.id=?
-2026-04-08 23:52:41.387 DEBUG [http-nio-8080-exec-7] org.hibernate.SQL - 
-    insert 
-    into
-        workouts
-        (name, user_id, workout_date) 
-    values
-        (?, ?, ?)
-2026-04-08 23:52:41.391 DEBUG [http-nio-8080-exec-7] org.hibernate.SQL - 
-    select
-        u1_0.id,
-        u1_0.email,
-        u1_0.username 
-    from
-        users u1_0 
-    where
-        u1_0.id=?
-2026-04-08 23:52:41.393 INFO  [http-nio-8080-exec-7] c.g.g.a.ServiceExecutionLoggingAspect - Service method WorkoutService.createBulkNonTransactional(..) executed in 12 ms
-2026-04-08 23:52:41.393 ERROR [http-nio-8080-exec-7] c.g.g.e.GlobalExceptionHandler - Bulk workout demo failed. path=/api/v1/workouts/bulk/non-transactional, message=Bulk demo failed because user was not found: 800
-2026-04-08 23:52:48.351 DEBUG [http-nio-8080-exec-9] org.hibernate.SQL - 
-    select
-        u1_0.id,
-        u1_0.email,
-        u1_0.username 
-    from
-        users u1_0 
-    where
-        u1_0.id=?
-2026-04-08 23:52:48.352 DEBUG [http-nio-8080-exec-9] org.hibernate.SQL - 
-    insert 
-    into
-        workouts
-        (name, user_id, workout_date) 
-    values
-        (?, ?, ?)
-2026-04-08 23:52:48.354 DEBUG [http-nio-8080-exec-9] org.hibernate.SQL - 
-    select
-        u1_0.id,
-        u1_0.email,
-        u1_0.username 
-    from
-        users u1_0 
-    where
-        u1_0.id=?
-2026-04-08 23:52:48.355 INFO  [http-nio-8080-exec-9] c.g.g.a.ServiceExecutionLoggingAspect - Service method WorkoutService.createBulkTransactional(..) executed in 4 ms
-2026-04-08 23:52:48.356 ERROR [http-nio-8080-exec-9] c.g.g.e.GlobalExceptionHandler - Bulk workout demo failed. path=/api/v1/workouts/bulk/transactional, message=Bulk demo failed because user was not found: 148488
-2026-04-08 23:52:52.923 DEBUG [http-nio-8080-exec-2] org.hibernate.SQL - 
+2026-04-09 00:13:17.524 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2026-04-09 00:13:17.571 INFO  [main] c.g.gymtracker.GymTrackerApplication - Starting GymTrackerApplication using Java 17.0.18 with PID 6268 (C:\Users\graph\IdeaProjects\gym-tracker\target\classes started by graph in C:\Users\graph\IdeaProjects\gym-tracker)
+2026-04-09 00:13:17.572 DEBUG [main] c.g.gymtracker.GymTrackerApplication - Running with Spring Boot v3.2.3, Spring v6.1.4
+2026-04-09 00:13:17.573 INFO  [main] c.g.gymtracker.GymTrackerApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-09 00:13:18.261 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-09 00:13:18.319 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 51 ms. Found 5 JPA repository interfaces.
+2026-04-09 00:13:18.945 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-04-09 00:13:18.953 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-04-09 00:13:18.955 INFO  [main] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-09 00:13:18.955 INFO  [main] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-04-09 00:13:19.013 INFO  [main] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-04-09 00:13:19.013 INFO  [main] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1401 ms
+2026-04-09 00:13:19.160 INFO  [main] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-09 00:13:19.241 INFO  [main] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-04-09 00:13:19.274 INFO  [main] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-04-09 00:13:19.527 INFO  [main] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-09 00:13:19.553 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-04-09 00:13:19.724 INFO  [main] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@19647566
+2026-04-09 00:13:19.725 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-04-09 00:13:19.775 WARN  [main] org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-09 00:13:20.665 INFO  [main] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-09 00:13:20.775 INFO  [main] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-09 00:13:21.267 INFO  [main] o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-09 00:13:21.825 WARN  [main] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-09 00:13:22.261 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-04-09 00:13:22.277 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-04-09 00:13:22.286 INFO  [main] c.g.gymtracker.GymTrackerApplication - Started GymTrackerApplication in 5.268 seconds (process running for 5.977)
+2026-04-09 00:13:51.494 INFO  [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-09 00:13:51.496 INFO  [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-04-09 00:13:51.497 INFO  [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-04-09 00:13:51.663 DEBUG [http-nio-8080-exec-1] org.hibernate.SQL - 
     select
         w1_0.id,
         w1_0.name,
@@ -65,4 +41,86 @@
     left join
         users u1_0 
             on u1_0.id=w1_0.user_id
-2026-04-08 23:52:52.927 INFO  [http-nio-8080-exec-2] c.g.g.a.ServiceExecutionLoggingAspect - Service method WorkoutService.findAll() executed in 5 ms
+2026-04-09 00:13:51.688 INFO  [http-nio-8080-exec-1] c.g.g.a.ServiceExecutionLoggingAspect - Service method WorkoutService.findAll() executed in 122 ms
+2026-04-09 00:13:59.102 DEBUG [http-nio-8080-exec-3] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.email,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+2026-04-09 00:13:59.124 DEBUG [http-nio-8080-exec-3] org.hibernate.SQL - 
+    insert 
+    into
+        workouts
+        (name, user_id, workout_date) 
+    values
+        (?, ?, ?)
+2026-04-09 00:13:59.147 DEBUG [http-nio-8080-exec-3] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.email,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+2026-04-09 00:13:59.150 INFO  [http-nio-8080-exec-3] c.g.g.a.ServiceExecutionLoggingAspect - Service method WorkoutService.createBulkNonTransactional(..) executed in 56 ms
+2026-04-09 00:13:59.152 ERROR [http-nio-8080-exec-3] c.g.g.e.GlobalExceptionHandler - Bulk workout demo failed. path=/api/v1/workouts/bulk/non-transactional, message=Bulk demo failed because user was not found: 800
+2026-04-09 00:14:03.503 DEBUG [http-nio-8080-exec-5] org.hibernate.SQL - 
+    select
+        w1_0.id,
+        w1_0.name,
+        u1_0.id,
+        u1_0.email,
+        u1_0.username,
+        w1_0.workout_date 
+    from
+        workouts w1_0 
+    left join
+        users u1_0 
+            on u1_0.id=w1_0.user_id
+2026-04-09 00:14:03.510 INFO  [http-nio-8080-exec-5] c.g.g.a.ServiceExecutionLoggingAspect - Service method WorkoutService.findAll() executed in 9 ms
+2026-04-09 00:14:13.299 DEBUG [http-nio-8080-exec-6] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.email,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+2026-04-09 00:14:13.300 DEBUG [http-nio-8080-exec-6] org.hibernate.SQL - 
+    insert 
+    into
+        workouts
+        (name, user_id, workout_date) 
+    values
+        (?, ?, ?)
+2026-04-09 00:14:13.302 DEBUG [http-nio-8080-exec-6] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.email,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+2026-04-09 00:14:13.302 INFO  [http-nio-8080-exec-6] c.g.g.a.ServiceExecutionLoggingAspect - Service method WorkoutService.createBulkTransactional(..) executed in 4 ms
+2026-04-09 00:14:13.304 ERROR [http-nio-8080-exec-6] c.g.g.e.GlobalExceptionHandler - Bulk workout demo failed. path=/api/v1/workouts/bulk/transactional, message=Bulk demo failed because user was not found: 148488
+2026-04-09 00:14:17.726 DEBUG [http-nio-8080-exec-8] org.hibernate.SQL - 
+    select
+        w1_0.id,
+        w1_0.name,
+        u1_0.id,
+        u1_0.email,
+        u1_0.username,
+        w1_0.workout_date 
+    from
+        workouts w1_0 
+    left join
+        users u1_0 
+            on u1_0.id=w1_0.user_id
+2026-04-09 00:14:17.731 INFO  [http-nio-8080-exec-8] c.g.g.a.ServiceExecutionLoggingAspect - Service method WorkoutService.findAll() executed in 7 ms

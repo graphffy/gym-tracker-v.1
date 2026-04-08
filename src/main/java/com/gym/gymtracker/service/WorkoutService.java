@@ -1,8 +1,8 @@
 package com.gym.gymtracker.service;
 
+import com.gym.gymtracker.dto.WorkoutDto;
 import com.gym.gymtracker.exception.BulkWorkoutDemoException;
 import com.gym.gymtracker.exception.ResourceNotFoundException;
-import com.gym.gymtracker.dto.WorkoutDto;
 import com.gym.gymtracker.mapper.WorkoutMapper;
 import com.gym.gymtracker.model.User;
 import com.gym.gymtracker.model.Workout;
@@ -39,8 +39,7 @@ public class WorkoutService {
 
     @Transactional
     public WorkoutDto create(WorkoutDto dto) {
-        User user = userRepository.findById(dto.getUserId())
-            .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        User user = getUserOrThrow(dto.getUserId());
 
         Workout workout = buildWorkout(dto, user);
 
@@ -108,6 +107,11 @@ public class WorkoutService {
                 + dto.getUserId()));
 
         return workoutMapper.toDto(workoutRepository.save(buildWorkout(dto, user)));
+    }
+
+    private User getUserOrThrow(Long userId) {
+        return userRepository.findById(userId)
+            .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 
     private void validateBulkWorkout(WorkoutDto dto) {
