@@ -200,6 +200,25 @@ class WorkoutServiceTest {
     }
 
     @Test
+    void createBulkTransactionalAllowsNullNameToPassServiceValidation() {
+        User user = User.builder().id(1L).build();
+        LocalDateTime date = LocalDateTime.of(2026, 4, 8, 10, 0);
+        Workout saved = Workout.builder().id(5L).name(null).workoutDate(date).user(user).build();
+        WorkoutDto response = WorkoutDto.builder().id(5L).name(null).workoutDate(date).userId(1L).build();
+        List<WorkoutDto> request = List.of(
+            WorkoutDto.builder().name(null).workoutDate(date).userId(1L).build());
+
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+        when(workoutRepository.save(any(Workout.class))).thenReturn(saved);
+        when(workoutMapper.toDto(saved)).thenReturn(response);
+
+        List<WorkoutDto> result = workoutService.createBulkTransactional(request);
+
+        assertEquals(List.of(response), result);
+        verify(workoutRepository).save(any(Workout.class));
+    }
+
+    @Test
     void createBulkNonTransactionalThrowsDemoExceptionWhenUserMissing() {
         LocalDateTime date = LocalDateTime.of(2026, 4, 8, 10, 0);
         User user = User.builder().id(1L).build();
