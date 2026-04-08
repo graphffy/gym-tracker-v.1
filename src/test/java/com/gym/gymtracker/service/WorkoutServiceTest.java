@@ -134,7 +134,7 @@ class WorkoutServiceTest {
         Executable action = () -> workoutService.createBulkNonTransactional(request);
 
         BulkWorkoutDemoException exception = assertThrows(BulkWorkoutDemoException.class, action);
-        assertEquals("Bulk demo failed on workout name: FAIL", exception.getMessage());
+        assertEquals("Bulk demo failed on workout name: FAIL (non-transactional)", exception.getMessage());
         verify(workoutRepository, times(1)).save(any(Workout.class));
     }
 
@@ -160,7 +160,7 @@ class WorkoutServiceTest {
         Executable action = () -> workoutService.createBulkTransactional(request);
 
         BulkWorkoutDemoException exception = assertThrows(BulkWorkoutDemoException.class, action);
-        assertEquals("Bulk demo failed on workout name: FAIL", exception.getMessage());
+        assertEquals("Bulk demo failed on workout name: FAIL (transactional)", exception.getMessage());
     }
 
     @Test

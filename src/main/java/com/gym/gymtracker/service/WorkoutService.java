@@ -50,7 +50,7 @@ public class WorkoutService {
         List<WorkoutDto> createdWorkouts = new ArrayList<>();
 
         for (WorkoutDto dto : dtos) {
-            validateBulkWorkout(dto);
+            validateBulkWorkout(dto, false);
             createdWorkouts.add(createBulkWorkout(dto));
         }
 
@@ -59,10 +59,10 @@ public class WorkoutService {
 
     @Transactional
     public List<WorkoutDto> createBulkTransactional(List<WorkoutDto> dtos) {
+        validateBulkWorkouts(dtos);
         List<WorkoutDto> createdWorkouts = new ArrayList<>();
 
         for (WorkoutDto dto : dtos) {
-            validateBulkWorkout(dto);
             createdWorkouts.add(createBulkWorkout(dto));
         }
 
@@ -114,9 +114,16 @@ public class WorkoutService {
             .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 
-    private void validateBulkWorkout(WorkoutDto dto) {
+    private void validateBulkWorkouts(List<WorkoutDto> dtos) {
+        for (WorkoutDto dto : dtos) {
+            validateBulkWorkout(dto, true);
+        }
+    }
+
+    private void validateBulkWorkout(WorkoutDto dto, boolean transactionalMode) {
         if (dto.getName() != null && "FAIL".equals(dto.getName().trim().toUpperCase(Locale.ROOT))) {
-            throw new BulkWorkoutDemoException("Bulk demo failed on workout name: FAIL");
+            String mode = transactionalMode ? "transactional" : "non-transactional";
+            throw new BulkWorkoutDemoException("Bulk demo failed on workout name: FAIL (" + mode + ")");
         }
     }
 }
