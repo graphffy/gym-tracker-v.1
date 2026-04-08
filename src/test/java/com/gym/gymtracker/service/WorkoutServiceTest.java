@@ -141,12 +141,9 @@ class WorkoutServiceTest {
     @Test
     void createBulkTransactionalThrowsOnFailure() {
         LocalDateTime date = LocalDateTime.of(2026, 4, 8, 10, 0);
-        User user = User.builder().id(1L).build();
         List<WorkoutDto> request = List.of(
             WorkoutDto.builder().name("Chest Day").workoutDate(date).userId(1L).build(),
             WorkoutDto.builder().name("FAIL").workoutDate(date).userId(1L).build());
-
-        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
 
         Executable action = () -> workoutService.createBulkTransactional(request);
 

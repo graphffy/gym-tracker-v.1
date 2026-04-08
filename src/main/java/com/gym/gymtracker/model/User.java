@@ -38,6 +38,7 @@ public class User {
     private String email;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @Builder.Default
     @JsonManagedReference
     private List<Workout> workouts = new ArrayList<>();
 }
