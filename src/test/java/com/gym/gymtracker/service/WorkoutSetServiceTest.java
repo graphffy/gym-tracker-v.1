@@ -30,9 +30,11 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -411,12 +413,16 @@ class WorkoutSetServiceTest {
         Object pageDifferent = createKey("ivan", "bench", 1, 10, false);
         Object sizeDifferent = createKey("ivan", "bench", 0, 11, false);
         Object nativeDifferent = createKey("ivan", "bench", 0, 10, true);
+        Method equalsMethod = first.getClass().getDeclaredMethod("equals", Object.class);
         Method hashCodeMethod = first.getClass().getDeclaredMethod("hashCode");
         Method toStringMethod = first.getClass().getDeclaredMethod("toString");
+        equalsMethod.setAccessible(true);
         hashCodeMethod.setAccessible(true);
         toStringMethod.setAccessible(true);
 
-        assertSame(first, first);
+        assertTrue((Boolean) equalsMethod.invoke(first, first));
+        assertFalse((Boolean) equalsMethod.invoke(first, new Object[]{null}));
+        assertFalse((Boolean) equalsMethod.invoke(first, "other"));
         assertEquals(first, same);
         assertNotEquals(first, different);
         assertNotEquals(first, usernameDifferent);
@@ -424,8 +430,6 @@ class WorkoutSetServiceTest {
         assertNotEquals(first, pageDifferent);
         assertNotEquals(first, sizeDifferent);
         assertNotEquals(first, nativeDifferent);
-        assertNotEquals(null, first);
-        assertNotEquals("other", first);
         assertEquals(hashCodeMethod.invoke(first), hashCodeMethod.invoke(same));
         assertNotEquals(hashCodeMethod.invoke(first), hashCodeMethod.invoke(different));
         assertEquals(
