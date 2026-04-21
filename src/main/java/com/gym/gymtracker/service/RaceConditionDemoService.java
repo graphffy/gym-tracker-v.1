@@ -11,36 +11,23 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Service
 public class RaceConditionDemoService {
 
-    private int unsafeCounter;
-    private int synchronizedCounter;
-    private final AtomicInteger atomicCounter = new AtomicInteger();
-
     public RaceConditionResultDto demonstrate(int threads, int incrementsPerThread) {
         validateInput(threads, incrementsPerThread);
-        resetCounters();
 
-        ExecutorService executorService = Executors.newFixedThreadPool(threads);
-        CountDownLatch startSignal = new CountDownLatch(1);
-        CountDownLatch doneSignal = new CountDownLatch(threads);
-
-        for (int i = 0; i < threads; i++) {
-            executorService.submit(() -> incrementCounters(incrementsPerThread, startSignal, doneSignal));
-        }
-
-        startSignal.countDown();
-        awaitCompletion(doneSignal);
-        executorService.shutdown();
+        int unsafeValue = runScenario(threads, incrementsPerThread, new UnsafeCounter());
+        int synchronizedValue = runScenario(threads, incrementsPerThread, new SynchronizedCounter());
+        int atomicValue = runScenario(threads, incrementsPerThread, new AtomicCounter());
 
         int expectedValue = threads * incrementsPerThread;
         return RaceConditionResultDto.builder()
             .threads(threads)
             .incrementsPerThread(incrementsPerThread)
             .expectedValue(expectedValue)
-            .unsafeCounterValue(unsafeCounter)
-            .atomicCounterValue(atomicCounter.get())
-            .synchronizedCounterValue(synchronizedCounter)
-            .unsafeLostUpdates(expectedValue - unsafeCounter)
-            .solutionCorrect(atomicCounter.get() == expectedValue && synchronizedCounter == expectedValue)
+            .unsafeCounterValue(unsafeValue)
+            .atomicCounterValue(atomicValue)
+            .synchronizedCounterValue(synchronizedValue)
+            .unsafeLostUpdates(expectedValue - unsafeValue)
+            .solutionCorrect(atomicValue == expectedValue && synchronizedValue == expectedValue)
             .build();
     }
 
@@ -53,19 +40,27 @@ public class RaceConditionDemoService {
         }
     }
 
-    private void resetCounters() {
-        unsafeCounter = 0;
-        synchronizedCounter = 0;
-        atomicCounter.set(0);
+    private int runScenario(int threadCount, int incrementsPerThread, IncrementCounter counter) {
+        ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
+        CountDownLatch startSignal = new CountDownLatch(1);
+        CountDownLatch doneSignal = new CountDownLatch(threadCount);
+
+        for (int i = 0; i < threadCount; i++) {
+            executorService.submit(() -> incrementCounter(counter, incrementsPerThread, startSignal, doneSignal));
+        }
+
+        startSignal.countDown();
+        awaitCompletion(doneSignal);
+        executorService.shutdown();
+        return counter.get();
     }
 
-    private void incrementCounters(int incrementsPerThread, CountDownLatch startSignal, CountDownLatch doneSignal) {
+    private void incrementCounter(IncrementCounter counter, int incrementsPerThread,
+                                  CountDownLatch startSignal, CountDownLatch doneSignal) {
         try {
             startSignal.await();
             for (int i = 0; i < incrementsPerThread; i++) {
-                incrementUnsafe();
-                atomicCounter.incrementAndGet();
-                incrementSynchronized();
+                counter.increment();
             }
         } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
@@ -75,24 +70,67 @@ public class RaceConditionDemoService {
         }
     }
 
-    private void incrementUnsafe() {
-        int currentValue = unsafeCounter;
-        if ((currentValue & 255) == 0) {
-            Thread.yield();
-        }
-        unsafeCounter = currentValue + 1;
-    }
-
-    private synchronized void incrementSynchronized() {
-        synchronizedCounter++;
-    }
-
     private void awaitCompletion(CountDownLatch doneSignal) {
         try {
             doneSignal.await();
         } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
             throw new IllegalStateException("Race condition demo was interrupted", ex);
+        }
+    }
+
+    private interface IncrementCounter {
+
+        void increment();
+
+        int get();
+    }
+
+    private static class UnsafeCounter implements IncrementCounter {
+
+        private int value;
+
+        @Override
+        public void increment() {
+            if ((value & 255) == 0) {
+                Thread.yield();
+            }
+            value++;
+        }
+
+        @Override
+        public int get() {
+            return value;
+        }
+    }
+
+    private static class SynchronizedCounter implements IncrementCounter {
+
+        private int value;
+
+        @Override
+        public synchronized void increment() {
+            value++;
+        }
+
+        @Override
+        public synchronized int get() {
+            return value;
+        }
+    }
+
+    private static class AtomicCounter implements IncrementCounter {
+
+        private final AtomicInteger value = new AtomicInteger();
+
+        @Override
+        public void increment() {
+            value.incrementAndGet();
+        }
+
+        @Override
+        public int get() {
+            return value.get();
         }
     }
 }

@@ -2,18 +2,21 @@
 
 Test plan: `async-and-race-load-test.jmx`
 
-The plan covers two scenarios:
+The plan covers these scenarios:
 
-- `Async task workflow`: 50 threads, 20 loops. Each virtual user starts
+- `All entity API workflow`: creates and exercises Users, Categories, Exercises,
+  Workouts, and Workout Sets through POST, GET, PUT, and search/bulk endpoints.
+  DELETE requests are intentionally excluded.
+- `Async task workflow`: each virtual user starts
   `POST /api/v1/async-tasks/workout-set-statistics`, extracts `taskId`, then checks
   `GET /api/v1/async-tasks/{taskId}`.
-- `Race condition demo load`: 50 threads, 10 loops against
+- `Race condition demo load`: requests
   `GET /api/v1/race-condition/demo?threads=64&incrementsPerThread=10000`.
 
 Run command:
 
 ```bash
-jmeter -n -t async-and-race-load-test.jmx -l target/jmeter/async-and-race-results.jtl -e -o target/jmeter/report
+jmeter -n -t async-and-race-load-test.jmx -l target/jmeter/full-api-results.jtl -e -o target/jmeter/report
 ```
 
 Environment note:
@@ -29,5 +32,6 @@ Result table template:
 
 | Scenario | Samples | Error % | Average | P95 | Throughput |
 | --- | ---: | ---: | ---: | ---: | ---: |
+| All entity API workflow | Fill from JMeter Summary Report | Fill | Fill | Fill | Fill |
 | Async task workflow | Fill from JMeter Summary Report | Fill | Fill | Fill | Fill |
 | Race condition demo load | Fill from JMeter Summary Report | Fill | Fill | Fill | Fill |

@@ -23,8 +23,8 @@ public interface WorkoutSetRepository extends JpaRepository<WorkoutSet, Long> {
         JOIN ws.workout w
         JOIN w.user u
         JOIN ws.exercise e
-        WHERE (:username IS NULL OR LOWER(u.username) LIKE LOWER(CONCAT('%', :username, '%')))
-          AND (:exerciseName IS NULL OR LOWER(e.name) LIKE LOWER(CONCAT('%', :exerciseName, '%')))
+        WHERE LOWER(u.username) LIKE LOWER(CONCAT('%', COALESCE(:username, ''), '%'))
+          AND LOWER(e.name) LIKE LOWER(CONCAT('%', COALESCE(:exerciseName, ''), '%'))
         """)
     Page<WorkoutSet> searchByUserAndExerciseJpql(
         @Param("username") String username,
