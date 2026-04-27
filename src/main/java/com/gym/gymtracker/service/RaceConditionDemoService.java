@@ -92,9 +92,6 @@ public class RaceConditionDemoService {
 
         @Override
         public void increment() {
-            if ((value & 255) == 0) {
-                Thread.yield();
-            }
             value++;
         }
 
@@ -113,7 +110,7 @@ public class RaceConditionDemoService {
             value++;
         }
 
-        @Override
+        @Override   
         public synchronized int get() {
             return value;
         }
