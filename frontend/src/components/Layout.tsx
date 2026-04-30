@@ -1,13 +1,12 @@
-import { Activity, Dumbbell, FolderTree, Home, Menu, Users, X, ListChecks } from 'lucide-react';
+import { Activity, Dumbbell, FolderTree, Menu, Users, X, ListChecks } from 'lucide-react';
 import { useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 
 const links = [
-  { to: '/', label: 'Главная', icon: Home },
+  { to: '/workouts', label: 'Тренировки', icon: Activity },
   { to: '/categories', label: 'Категории', icon: FolderTree },
   { to: '/exercises', label: 'Упражнения', icon: Dumbbell },
   { to: '/users', label: 'Люди', icon: Users },
-  { to: '/workouts', label: 'Тренировки', icon: Activity },
   { to: '/sets', label: 'Подходы', icon: ListChecks },
 ];
 

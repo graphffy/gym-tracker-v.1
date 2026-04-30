@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
 import { Layout } from './components/Layout';
-import { DashboardPage } from './pages/DashboardPage';
 import { CategoriesPage } from './pages/CategoriesPage';
 import { ExercisesPage } from './pages/ExercisesPage';
 import { UsersPage } from './pages/UsersPage';
@@ -26,14 +25,14 @@ const router = createBrowserRouter([
     path: '/',
     element: <Layout />,
     children: [
-      { index: true, element: <DashboardPage /> },
+      { index: true, element: <Navigate to="/workouts" replace /> },
       { path: 'categories', element: <CategoriesPage /> },
       { path: 'exercises', element: <ExercisesPage /> },
       { path: 'users', element: <UsersPage /> },
       { path: 'workouts', element: <WorkoutsPage /> },
       { path: 'workouts/:workoutId', element: <WorkoutDetailPage /> },
       { path: 'sets', element: <WorkoutSetsPage /> },
-      { path: '*', element: <Navigate to="/" replace /> },
+      { path: '*', element: <Navigate to="/workouts" replace /> },
     ],
   },
 ]);

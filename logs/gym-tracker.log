@@ -176,3 +176,778 @@
         workouts w1_0 
             on u1_0.id=w1_0.user_id
 2026-04-30 03:15:56.129 INFO  [http-nio-8080-exec-8] c.g.g.a.ServiceExecutionLoggingAspect - Service method UserService.findAll() executed in 28 ms
+2026-04-30 03:17:31.801 DEBUG [http-nio-8080-exec-1] org.hibernate.SQL - 
+    select
+        e1_0.id,
+        c1_0.exercise_id,
+        c1_1.id,
+        c1_1.name,
+        e1_0.description,
+        e1_0.name 
+    from
+        exercises e1_0 
+    left join
+        exercise_categories c1_0 
+            on e1_0.id=c1_0.exercise_id 
+    left join
+        categories c1_1 
+            on c1_1.id=c1_0.category_id
+2026-04-30 03:17:31.805 DEBUG [http-nio-8080-exec-3] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.email,
+        u1_0.username,
+        w1_0.user_id,
+        w1_0.id,
+        w1_0.name,
+        w1_0.workout_date 
+    from
+        users u1_0 
+    left join
+        workouts w1_0 
+            on u1_0.id=w1_0.user_id
+2026-04-30 03:17:31.805 DEBUG [http-nio-8080-exec-5] org.hibernate.SQL - 
+    select
+        w1_0.id,
+        w1_0.name,
+        u1_0.id,
+        u1_0.email,
+        u1_0.username,
+        w1_0.workout_date 
+    from
+        workouts w1_0 
+    left join
+        users u1_0 
+            on u1_0.id=w1_0.user_id
+2026-04-30 03:17:31.806 DEBUG [http-nio-8080-exec-4] org.hibernate.SQL - 
+    select
+        ws1_0.id,
+        e1_0.id,
+        e1_0.description,
+        e1_0.name,
+        ws1_0.reps,
+        ws1_0.weight,
+        w1_0.id,
+        w1_0.name,
+        w1_0.user_id,
+        w1_0.workout_date 
+    from
+        workout_sets ws1_0 
+    left join
+        exercises e1_0 
+            on e1_0.id=ws1_0.exercise_id 
+    left join
+        workouts w1_0 
+            on w1_0.id=ws1_0.workout_id
+2026-04-30 03:17:31.807 INFO  [http-nio-8080-exec-4] c.g.g.a.ServiceExecutionLoggingAspect - Service method WorkoutSetService.findAll() executed in 3 ms
+2026-04-30 03:17:31.807 INFO  [http-nio-8080-exec-1] c.g.g.a.ServiceExecutionLoggingAspect - Service method ExerciseService.findAll() executed in 9 ms
+2026-04-30 03:17:31.808 INFO  [http-nio-8080-exec-5] c.g.g.a.ServiceExecutionLoggingAspect - Service method WorkoutService.findAll() executed in 4 ms
+2026-04-30 03:17:31.813 INFO  [http-nio-8080-exec-3] c.g.g.a.ServiceExecutionLoggingAspect - Service method UserService.findAll() executed in 12 ms
+2026-04-30 03:17:33.374 DEBUG [http-nio-8080-exec-2] org.hibernate.SQL - 
+    select
+        c1_0.id,
+        c1_0.name 
+    from
+        categories c1_0
+2026-04-30 03:17:33.377 INFO  [http-nio-8080-exec-2] c.g.g.a.ServiceExecutionLoggingAspect - Service method CategoryService.findAll() executed in 6 ms
+2026-04-30 03:20:48.923 DEBUG [http-nio-8080-exec-10] org.hibernate.SQL - 
+    select
+        e1_0.id,
+        c1_0.exercise_id,
+        c1_1.id,
+        c1_1.name,
+        e1_0.description,
+        e1_0.name 
+    from
+        exercises e1_0 
+    left join
+        exercise_categories c1_0 
+            on e1_0.id=c1_0.exercise_id 
+    left join
+        categories c1_1 
+            on c1_1.id=c1_0.category_id
+2026-04-30 03:20:48.923 DEBUG [http-nio-8080-exec-6] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.email,
+        u1_0.username,
+        w1_0.user_id,
+        w1_0.id,
+        w1_0.name,
+        w1_0.workout_date 
+    from
+        users u1_0 
+    left join
+        workouts w1_0 
+            on u1_0.id=w1_0.user_id
+2026-04-30 03:20:48.923 DEBUG [http-nio-8080-exec-9] org.hibernate.SQL - 
+    select
+        ws1_0.id,
+        e1_0.id,
+        e1_0.description,
+        e1_0.name,
+        ws1_0.reps,
+        ws1_0.weight,
+        w1_0.id,
+        w1_0.name,
+        w1_0.user_id,
+        w1_0.workout_date 
+    from
+        workout_sets ws1_0 
+    left join
+        exercises e1_0 
+            on e1_0.id=ws1_0.exercise_id 
+    left join
+        workouts w1_0 
+            on w1_0.id=ws1_0.workout_id
+2026-04-30 03:20:48.923 DEBUG [http-nio-8080-exec-7] org.hibernate.SQL - 
+    select
+        w1_0.id,
+        w1_0.name,
+        u1_0.id,
+        u1_0.email,
+        u1_0.username,
+        w1_0.workout_date 
+    from
+        workouts w1_0 
+    left join
+        users u1_0 
+            on u1_0.id=w1_0.user_id
+2026-04-30 03:20:48.924 INFO  [http-nio-8080-exec-9] c.g.g.a.ServiceExecutionLoggingAspect - Service method WorkoutSetService.findAll() executed in 3 ms
+2026-04-30 03:20:48.924 INFO  [http-nio-8080-exec-6] c.g.g.a.ServiceExecutionLoggingAspect - Service method UserService.findAll() executed in 3 ms
+2026-04-30 03:20:48.924 INFO  [http-nio-8080-exec-7] c.g.g.a.ServiceExecutionLoggingAspect - Service method WorkoutService.findAll() executed in 4 ms
+2026-04-30 03:20:48.929 INFO  [http-nio-8080-exec-10] c.g.g.a.ServiceExecutionLoggingAspect - Service method ExerciseService.findAll() executed in 8 ms
+2026-04-30 03:28:33.451 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-30 03:28:33.455 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-04-30 03:28:33.465 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-04-30 03:28:37.319 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2026-04-30 03:28:37.357 INFO  [main] c.g.gymtracker.GymTrackerApplication - Starting GymTrackerApplication using Java 17.0.18 with PID 19748 (C:\Users\graph\IdeaProjects\gym-tracker\target\classes started by graph in C:\Users\graph\IdeaProjects\gym-tracker)
+2026-04-30 03:28:37.358 DEBUG [main] c.g.gymtracker.GymTrackerApplication - Running with Spring Boot v3.2.3, Spring v6.1.4
+2026-04-30 03:28:37.358 INFO  [main] c.g.gymtracker.GymTrackerApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-30 03:28:37.981 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-30 03:28:38.031 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 44 ms. Found 5 JPA repository interfaces.
+2026-04-30 03:28:38.576 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-04-30 03:28:38.584 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-04-30 03:28:38.585 INFO  [main] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-30 03:28:38.585 INFO  [main] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-04-30 03:28:38.641 INFO  [main] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-04-30 03:28:38.641 INFO  [main] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1244 ms
+2026-04-30 03:28:38.772 INFO  [main] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-30 03:28:38.855 INFO  [main] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-04-30 03:28:38.889 INFO  [main] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-04-30 03:28:39.105 INFO  [main] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-30 03:28:39.151 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-04-30 03:28:39.288 INFO  [main] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@38667005
+2026-04-30 03:28:39.290 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-04-30 03:28:39.326 WARN  [main] org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-30 03:28:40.248 INFO  [main] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-30 03:28:40.344 INFO  [main] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-30 03:28:40.631 INFO  [main] o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-30 03:28:41.373 WARN  [main] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-30 03:28:41.790 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-04-30 03:28:41.811 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-04-30 03:28:41.818 INFO  [main] c.g.gymtracker.GymTrackerApplication - Started GymTrackerApplication in 4.909 seconds (process running for 5.52)
+2026-04-30 03:28:43.193 INFO  [http-nio-8080-exec-3] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-30 03:28:43.193 INFO  [http-nio-8080-exec-3] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-04-30 03:28:43.193 INFO  [http-nio-8080-exec-3] o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2026-04-30 03:28:43.360 DEBUG [http-nio-8080-exec-3] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.email,
+        u1_0.username,
+        w1_0.user_id,
+        w1_0.id,
+        w1_0.name,
+        w1_0.workout_date 
+    from
+        users u1_0 
+    left join
+        workouts w1_0 
+            on u1_0.id=w1_0.user_id
+2026-04-30 03:28:43.360 DEBUG [http-nio-8080-exec-2] org.hibernate.SQL - 
+    select
+        ws1_0.id,
+        e1_0.id,
+        e1_0.description,
+        e1_0.name,
+        ws1_0.reps,
+        ws1_0.weight,
+        w1_0.id,
+        w1_0.name,
+        w1_0.user_id,
+        w1_0.workout_date 
+    from
+        workout_sets ws1_0 
+    left join
+        exercises e1_0 
+            on e1_0.id=ws1_0.exercise_id 
+    left join
+        workouts w1_0 
+            on w1_0.id=ws1_0.workout_id
+2026-04-30 03:28:43.360 DEBUG [http-nio-8080-exec-1] org.hibernate.SQL - 
+    select
+        w1_0.id,
+        w1_0.name,
+        u1_0.id,
+        u1_0.email,
+        u1_0.username,
+        w1_0.workout_date 
+    from
+        workouts w1_0 
+    left join
+        users u1_0 
+            on u1_0.id=w1_0.user_id
+2026-04-30 03:28:43.360 DEBUG [http-nio-8080-exec-4] org.hibernate.SQL - 
+    select
+        e1_0.id,
+        c1_0.exercise_id,
+        c1_1.id,
+        c1_1.name,
+        e1_0.description,
+        e1_0.name 
+    from
+        exercises e1_0 
+    left join
+        exercise_categories c1_0 
+            on e1_0.id=c1_0.exercise_id 
+    left join
+        categories c1_1 
+            on c1_1.id=c1_0.category_id
+2026-04-30 03:28:43.423 INFO  [http-nio-8080-exec-3] c.g.g.a.ServiceExecutionLoggingAspect - Service method UserService.findAll() executed in 180 ms
+2026-04-30 03:28:43.423 INFO  [http-nio-8080-exec-4] c.g.g.a.ServiceExecutionLoggingAspect - Service method ExerciseService.findAll() executed in 180 ms
+2026-04-30 03:28:43.423 INFO  [http-nio-8080-exec-2] c.g.g.a.ServiceExecutionLoggingAspect - Service method WorkoutSetService.findAll() executed in 176 ms
+2026-04-30 03:28:43.423 INFO  [http-nio-8080-exec-1] c.g.g.a.ServiceExecutionLoggingAspect - Service method WorkoutService.findAll() executed in 177 ms
+2026-04-30 03:28:44.472 DEBUG [http-nio-8080-exec-9] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.email,
+        u1_0.username,
+        w1_0.user_id,
+        w1_0.id,
+        w1_0.name,
+        w1_0.workout_date 
+    from
+        users u1_0 
+    left join
+        workouts w1_0 
+            on u1_0.id=w1_0.user_id
+2026-04-30 03:28:44.472 DEBUG [http-nio-8080-exec-7] org.hibernate.SQL - 
+    select
+        e1_0.id,
+        c1_0.exercise_id,
+        c1_1.id,
+        c1_1.name,
+        e1_0.description,
+        e1_0.name 
+    from
+        exercises e1_0 
+    left join
+        exercise_categories c1_0 
+            on e1_0.id=c1_0.exercise_id 
+    left join
+        categories c1_1 
+            on c1_1.id=c1_0.category_id
+2026-04-30 03:28:44.472 DEBUG [http-nio-8080-exec-8] org.hibernate.SQL - 
+    select
+        w1_0.id,
+        w1_0.name,
+        u1_0.id,
+        u1_0.email,
+        u1_0.username,
+        w1_0.workout_date 
+    from
+        workouts w1_0 
+    left join
+        users u1_0 
+            on u1_0.id=w1_0.user_id
+2026-04-30 03:28:44.477 INFO  [http-nio-8080-exec-9] c.g.g.a.ServiceExecutionLoggingAspect - Service method UserService.findAll() executed in 7 ms
+2026-04-30 03:28:44.478 INFO  [http-nio-8080-exec-8] c.g.g.a.ServiceExecutionLoggingAspect - Service method WorkoutService.findAll() executed in 8 ms
+2026-04-30 03:28:44.479 INFO  [http-nio-8080-exec-7] c.g.g.a.ServiceExecutionLoggingAspect - Service method ExerciseService.findAll() executed in 9 ms
+2026-04-30 03:28:44.485 DEBUG [http-nio-8080-exec-5] org.hibernate.SQL - 
+    select
+        ws1_0.id,
+        e1_0.id,
+        e1_0.description,
+        e1_0.name,
+        ws1_0.reps,
+        ws1_0.weight,
+        w1_0.id,
+        w1_0.name,
+        w1_0.user_id,
+        w1_0.workout_date 
+    from
+        workout_sets ws1_0 
+    left join
+        exercises e1_0 
+            on e1_0.id=ws1_0.exercise_id 
+    left join
+        workouts w1_0 
+            on w1_0.id=ws1_0.workout_id
+2026-04-30 03:28:44.488 INFO  [http-nio-8080-exec-5] c.g.g.a.ServiceExecutionLoggingAspect - Service method WorkoutSetService.findAll() executed in 7 ms
+2026-04-30 03:28:46.865 DEBUG [http-nio-8080-exec-6] org.hibernate.SQL - 
+    select
+        c1_0.id,
+        c1_0.name 
+    from
+        categories c1_0
+2026-04-30 03:28:46.867 INFO  [http-nio-8080-exec-6] c.g.g.a.ServiceExecutionLoggingAspect - Service method CategoryService.findAll() executed in 3 ms
+2026-04-30 03:29:50.958 DEBUG [http-nio-8080-exec-10] org.hibernate.SQL - 
+    insert 
+    into
+        users
+        (email, username) 
+    values
+        (?, ?)
+2026-04-30 03:29:50.966 INFO  [http-nio-8080-exec-10] c.g.g.a.ServiceExecutionLoggingAspect - Service method UserService.create(..) executed in 25 ms
+2026-04-30 03:29:50.991 DEBUG [http-nio-8080-exec-4] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.email,
+        u1_0.username,
+        w1_0.user_id,
+        w1_0.id,
+        w1_0.name,
+        w1_0.workout_date 
+    from
+        users u1_0 
+    left join
+        workouts w1_0 
+            on u1_0.id=w1_0.user_id
+2026-04-30 03:29:50.991 INFO  [http-nio-8080-exec-4] c.g.g.a.ServiceExecutionLoggingAspect - Service method UserService.findAll() executed in 8 ms
+2026-04-30 03:29:55.555 DEBUG [http-nio-8080-exec-2] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.email,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+2026-04-30 03:29:55.558 DEBUG [http-nio-8080-exec-2] org.hibernate.SQL - 
+    insert 
+    into
+        workouts
+        (name, user_id, workout_date) 
+    values
+        (?, ?, ?)
+2026-04-30 03:29:55.558 INFO  [http-nio-8080-exec-2] c.g.g.a.ServiceExecutionLoggingAspect - Service method WorkoutService.create(..) executed in 8 ms
+2026-04-30 03:29:55.575 DEBUG [http-nio-8080-exec-3] org.hibernate.SQL - 
+    select
+        w1_0.id,
+        w1_0.name,
+        u1_0.id,
+        u1_0.email,
+        u1_0.username,
+        w1_0.workout_date 
+    from
+        workouts w1_0 
+    left join
+        users u1_0 
+            on u1_0.id=w1_0.user_id
+2026-04-30 03:29:55.575 INFO  [http-nio-8080-exec-3] c.g.g.a.ServiceExecutionLoggingAspect - Service method WorkoutService.findAll() executed in 0 ms
+2026-04-30 03:30:12.340 DEBUG [http-nio-8080-exec-8] org.hibernate.SQL - 
+    select
+        ws1_0.id,
+        e1_0.id,
+        e1_0.description,
+        e1_0.name,
+        ws1_0.reps,
+        ws1_0.weight,
+        w1_0.id,
+        w1_0.name,
+        w1_0.user_id,
+        w1_0.workout_date 
+    from
+        workout_sets ws1_0 
+    left join
+        exercises e1_0 
+            on e1_0.id=ws1_0.exercise_id 
+    left join
+        workouts w1_0 
+            on w1_0.id=ws1_0.workout_id
+2026-04-30 03:30:12.340 DEBUG [http-nio-8080-exec-7] org.hibernate.SQL - 
+    select
+        e1_0.id,
+        c1_0.exercise_id,
+        c1_1.id,
+        c1_1.name,
+        e1_0.description,
+        e1_0.name 
+    from
+        exercises e1_0 
+    left join
+        exercise_categories c1_0 
+            on e1_0.id=c1_0.exercise_id 
+    left join
+        categories c1_1 
+            on c1_1.id=c1_0.category_id
+2026-04-30 03:30:12.340 DEBUG [http-nio-8080-exec-1] org.hibernate.SQL - 
+    select
+        w1_0.id,
+        w1_0.name,
+        u1_0.id,
+        u1_0.email,
+        u1_0.username,
+        w1_0.workout_date 
+    from
+        workouts w1_0 
+    left join
+        users u1_0 
+            on u1_0.id=w1_0.user_id
+2026-04-30 03:30:12.342 INFO  [http-nio-8080-exec-1] c.g.g.a.ServiceExecutionLoggingAspect - Service method WorkoutService.findAll() executed in 4 ms
+2026-04-30 03:30:12.342 DEBUG [http-nio-8080-exec-9] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.email,
+        u1_0.username,
+        w1_0.user_id,
+        w1_0.id,
+        w1_0.name,
+        w1_0.workout_date 
+    from
+        users u1_0 
+    left join
+        workouts w1_0 
+            on u1_0.id=w1_0.user_id
+2026-04-30 03:30:12.343 INFO  [http-nio-8080-exec-8] c.g.g.a.ServiceExecutionLoggingAspect - Service method WorkoutSetService.findAll() executed in 6 ms
+2026-04-30 03:30:12.344 INFO  [http-nio-8080-exec-9] c.g.g.a.ServiceExecutionLoggingAspect - Service method UserService.findAll() executed in 7 ms
+2026-04-30 03:30:12.344 INFO  [http-nio-8080-exec-7] c.g.g.a.ServiceExecutionLoggingAspect - Service method ExerciseService.findAll() executed in 6 ms
+2026-04-30 03:30:15.140 DEBUG [http-nio-8080-exec-5] org.hibernate.SQL - 
+    select
+        c1_0.id,
+        c1_0.name 
+    from
+        categories c1_0
+2026-04-30 03:30:15.142 INFO  [http-nio-8080-exec-5] c.g.g.a.ServiceExecutionLoggingAspect - Service method CategoryService.findAll() executed in 3 ms
+2026-04-30 03:31:04.728 DEBUG [http-nio-8080-exec-6] org.hibernate.SQL - 
+    select
+        c1_0.id,
+        c1_0.name 
+    from
+        categories c1_0 
+    where
+        c1_0.id in (?)
+2026-04-30 03:31:04.729 DEBUG [http-nio-8080-exec-6] org.hibernate.SQL - 
+    insert 
+    into
+        exercises
+        (description, name) 
+    values
+        (?, ?)
+2026-04-30 03:31:04.729 INFO  [http-nio-8080-exec-6] c.g.g.a.ServiceExecutionLoggingAspect - Service method ExerciseService.create(..) executed in 16 ms
+2026-04-30 03:31:04.729 DEBUG [http-nio-8080-exec-6] org.hibernate.SQL - 
+    insert 
+    into
+        exercise_categories
+        (exercise_id, category_id) 
+    values
+        (?, ?)
+2026-04-30 03:31:04.746 DEBUG [http-nio-8080-exec-10] org.hibernate.SQL - 
+    select
+        e1_0.id,
+        c1_0.exercise_id,
+        c1_1.id,
+        c1_1.name,
+        e1_0.description,
+        e1_0.name 
+    from
+        exercises e1_0 
+    left join
+        exercise_categories c1_0 
+            on e1_0.id=c1_0.exercise_id 
+    left join
+        categories c1_1 
+            on c1_1.id=c1_0.category_id
+2026-04-30 03:31:04.746 INFO  [http-nio-8080-exec-10] c.g.g.a.ServiceExecutionLoggingAspect - Service method ExerciseService.findAll() executed in 0 ms
+2026-04-30 03:31:08.322 DEBUG [http-nio-8080-exec-2] org.hibernate.SQL - 
+    select
+        w1_0.id,
+        w1_0.name,
+        u1_0.id,
+        u1_0.email,
+        u1_0.username,
+        w1_0.workout_date 
+    from
+        workouts w1_0 
+    left join
+        users u1_0 
+            on u1_0.id=w1_0.user_id
+2026-04-30 03:31:08.322 DEBUG [http-nio-8080-exec-4] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.email,
+        u1_0.username,
+        w1_0.user_id,
+        w1_0.id,
+        w1_0.name,
+        w1_0.workout_date 
+    from
+        users u1_0 
+    left join
+        workouts w1_0 
+            on u1_0.id=w1_0.user_id
+2026-04-30 03:31:08.323 INFO  [http-nio-8080-exec-2] c.g.g.a.ServiceExecutionLoggingAspect - Service method WorkoutService.findAll() executed in 6 ms
+2026-04-30 03:31:08.323 INFO  [http-nio-8080-exec-4] c.g.g.a.ServiceExecutionLoggingAspect - Service method UserService.findAll() executed in 6 ms
+2026-04-30 03:31:09.573 DEBUG [http-nio-8080-exec-8] org.hibernate.SQL - 
+    select
+        c1_0.id,
+        c1_0.name 
+    from
+        categories c1_0
+2026-04-30 03:31:09.573 DEBUG [http-nio-8080-exec-3] org.hibernate.SQL - 
+    select
+        ws1_0.id,
+        e1_0.id,
+        e1_0.description,
+        e1_0.name,
+        ws1_0.reps,
+        ws1_0.weight,
+        w1_0.id,
+        w1_0.name,
+        w1_0.user_id,
+        w1_0.workout_date 
+    from
+        workout_sets ws1_0 
+    left join
+        exercises e1_0 
+            on e1_0.id=ws1_0.exercise_id 
+    left join
+        workouts w1_0 
+            on w1_0.id=ws1_0.workout_id
+2026-04-30 03:31:09.573 INFO  [http-nio-8080-exec-8] c.g.g.a.ServiceExecutionLoggingAspect - Service method CategoryService.findAll() executed in 0 ms
+2026-04-30 03:31:09.578 INFO  [http-nio-8080-exec-3] c.g.g.a.ServiceExecutionLoggingAspect - Service method WorkoutSetService.findAll() executed in 5 ms
+2026-04-30 03:31:42.837 DEBUG [http-nio-8080-exec-7] org.hibernate.SQL - 
+    select
+        w1_0.id,
+        w1_0.name,
+        w1_0.user_id,
+        w1_0.workout_date 
+    from
+        workouts w1_0 
+    where
+        w1_0.id=?
+2026-04-30 03:31:42.837 DEBUG [http-nio-8080-exec-7] org.hibernate.SQL - 
+    select
+        e1_0.id,
+        e1_0.description,
+        e1_0.name 
+    from
+        exercises e1_0 
+    where
+        e1_0.id=?
+2026-04-30 03:31:42.837 DEBUG [http-nio-8080-exec-7] org.hibernate.SQL - 
+    insert 
+    into
+        workout_sets
+        (exercise_id, reps, weight, workout_id) 
+    values
+        (?, ?, ?, ?)
+2026-04-30 03:31:42.837 DEBUG [http-nio-8080-exec-7] c.g.g.service.WorkoutSetService - WorkoutSet search cache invalidated. Entries before clear: 0
+2026-04-30 03:31:42.837 INFO  [http-nio-8080-exec-7] c.g.g.a.ServiceExecutionLoggingAspect - Service method WorkoutSetService.create(..) executed in 0 ms
+2026-04-30 03:31:42.854 DEBUG [http-nio-8080-exec-9] org.hibernate.SQL - 
+    select
+        ws1_0.id,
+        e1_0.id,
+        e1_0.description,
+        e1_0.name,
+        ws1_0.reps,
+        ws1_0.weight,
+        w1_0.id,
+        w1_0.name,
+        w1_0.user_id,
+        w1_0.workout_date 
+    from
+        workout_sets ws1_0 
+    left join
+        exercises e1_0 
+            on e1_0.id=ws1_0.exercise_id 
+    left join
+        workouts w1_0 
+            on w1_0.id=ws1_0.workout_id
+2026-04-30 03:31:42.854 INFO  [http-nio-8080-exec-9] c.g.g.a.ServiceExecutionLoggingAspect - Service method WorkoutSetService.findAll() executed in 0 ms
+2026-04-30 03:31:47.912 DEBUG [http-nio-8080-exec-1] org.hibernate.SQL - 
+    select
+        w1_0.id,
+        w1_0.name,
+        u1_0.id,
+        u1_0.email,
+        u1_0.username,
+        w1_0.workout_date 
+    from
+        workouts w1_0 
+    left join
+        users u1_0 
+            on u1_0.id=w1_0.user_id
+2026-04-30 03:31:47.912 DEBUG [http-nio-8080-exec-6] org.hibernate.SQL - 
+    select
+        e1_0.id,
+        c1_0.exercise_id,
+        c1_1.id,
+        c1_1.name,
+        e1_0.description,
+        e1_0.name 
+    from
+        exercises e1_0 
+    left join
+        exercise_categories c1_0 
+            on e1_0.id=c1_0.exercise_id 
+    left join
+        categories c1_1 
+            on c1_1.id=c1_0.category_id
+2026-04-30 03:31:47.912 DEBUG [http-nio-8080-exec-5] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.email,
+        u1_0.username,
+        w1_0.user_id,
+        w1_0.id,
+        w1_0.name,
+        w1_0.workout_date 
+    from
+        users u1_0 
+    left join
+        workouts w1_0 
+            on u1_0.id=w1_0.user_id
+2026-04-30 03:31:47.916 INFO  [http-nio-8080-exec-1] c.g.g.a.ServiceExecutionLoggingAspect - Service method WorkoutService.findAll() executed in 4 ms
+2026-04-30 03:31:47.916 INFO  [http-nio-8080-exec-5] c.g.g.a.ServiceExecutionLoggingAspect - Service method UserService.findAll() executed in 4 ms
+2026-04-30 03:31:47.923 INFO  [http-nio-8080-exec-6] c.g.g.a.ServiceExecutionLoggingAspect - Service method ExerciseService.findAll() executed in 11 ms
+2026-04-30 03:31:50.737 DEBUG [http-nio-8080-exec-10] org.hibernate.SQL - 
+    select
+        w1_0.id,
+        w1_0.name,
+        w1_0.user_id,
+        w1_0.workout_date 
+    from
+        workouts w1_0 
+    where
+        w1_0.id=?
+2026-04-30 03:31:50.740 INFO  [http-nio-8080-exec-10] c.g.g.a.ServiceExecutionLoggingAspect - Service method WorkoutService.findById(..) executed in 3 ms
+2026-04-30 03:31:55.724 DEBUG [http-nio-8080-exec-2] org.hibernate.SQL - 
+    select
+        w1_0.id,
+        w1_0.name,
+        w1_0.user_id,
+        w1_0.workout_date 
+    from
+        workouts w1_0 
+    where
+        w1_0.id=?
+2026-04-30 03:31:55.730 INFO  [http-nio-8080-exec-2] c.g.g.a.ServiceExecutionLoggingAspect - Service method WorkoutService.findById(..) executed in 6 ms
+2026-04-30 03:31:59.725 DEBUG [http-nio-8080-exec-4] org.hibernate.SQL - 
+    select
+        w1_0.id,
+        w1_0.name,
+        w1_0.user_id,
+        w1_0.workout_date 
+    from
+        workouts w1_0 
+    where
+        w1_0.id=?
+2026-04-30 03:31:59.725 INFO  [http-nio-8080-exec-4] c.g.g.a.ServiceExecutionLoggingAspect - Service method WorkoutService.findById(..) executed in 0 ms
+2026-04-30 03:32:03.743 DEBUG [http-nio-8080-exec-8] org.hibernate.SQL - 
+    select
+        c1_0.id,
+        c1_0.name 
+    from
+        categories c1_0
+2026-04-30 03:32:03.743 INFO  [http-nio-8080-exec-8] c.g.g.a.ServiceExecutionLoggingAspect - Service method CategoryService.findAll() executed in 0 ms
+2026-04-30 03:32:20.550 DEBUG [http-nio-8080-exec-3] org.hibernate.SQL - 
+    select
+        w1_0.id,
+        w1_0.name,
+        u1_0.id,
+        u1_0.email,
+        u1_0.username,
+        w1_0.workout_date 
+    from
+        workouts w1_0 
+    left join
+        users u1_0 
+            on u1_0.id=w1_0.user_id
+2026-04-30 03:32:20.553 DEBUG [http-nio-8080-exec-9] org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.email,
+        u1_0.username,
+        w1_0.user_id,
+        w1_0.id,
+        w1_0.name,
+        w1_0.workout_date 
+    from
+        users u1_0 
+    left join
+        workouts w1_0 
+            on u1_0.id=w1_0.user_id
+2026-04-30 03:32:20.554 INFO  [http-nio-8080-exec-3] c.g.g.a.ServiceExecutionLoggingAspect - Service method WorkoutService.findAll() executed in 6 ms
+2026-04-30 03:32:20.555 INFO  [http-nio-8080-exec-9] c.g.g.a.ServiceExecutionLoggingAspect - Service method UserService.findAll() executed in 5 ms
+2026-04-30 03:32:20.555 DEBUG [http-nio-8080-exec-7] org.hibernate.SQL - 
+    select
+        e1_0.id,
+        c1_0.exercise_id,
+        c1_1.id,
+        c1_1.name,
+        e1_0.description,
+        e1_0.name 
+    from
+        exercises e1_0 
+    left join
+        exercise_categories c1_0 
+            on e1_0.id=c1_0.exercise_id 
+    left join
+        categories c1_1 
+            on c1_1.id=c1_0.category_id
+2026-04-30 03:32:20.553 DEBUG [http-nio-8080-exec-1] org.hibernate.SQL - 
+    select
+        ws1_0.id,
+        e1_0.id,
+        e1_0.description,
+        e1_0.name,
+        ws1_0.reps,
+        ws1_0.weight,
+        w1_0.id,
+        w1_0.name,
+        w1_0.user_id,
+        w1_0.workout_date 
+    from
+        workout_sets ws1_0 
+    left join
+        exercises e1_0 
+            on e1_0.id=ws1_0.exercise_id 
+    left join
+        workouts w1_0 
+            on w1_0.id=ws1_0.workout_id
+2026-04-30 03:32:20.560 INFO  [http-nio-8080-exec-1] c.g.g.a.ServiceExecutionLoggingAspect - Service method WorkoutSetService.findAll() executed in 10 ms
+2026-04-30 03:32:20.569 INFO  [http-nio-8080-exec-7] c.g.g.a.ServiceExecutionLoggingAspect - Service method ExerciseService.findAll() executed in 19 ms
+2026-04-30 03:32:25.064 DEBUG [http-nio-8080-exec-5] org.hibernate.SQL - 
+    select
+        w1_0.id,
+        w1_0.name,
+        w1_0.user_id,
+        w1_0.workout_date 
+    from
+        workouts w1_0 
+    where
+        w1_0.id=?
+2026-04-30 03:32:25.066 INFO  [http-nio-8080-exec-5] c.g.g.a.ServiceExecutionLoggingAspect - Service method WorkoutService.findById(..) executed in 3 ms
+2026-04-30 03:32:33.316 DEBUG [http-nio-8080-exec-6] org.hibernate.SQL - 
+    select
+        w1_0.id,
+        w1_0.name,
+        w1_0.user_id,
+        w1_0.workout_date 
+    from
+        workouts w1_0 
+    where
+        w1_0.id=?
+2026-04-30 03:32:33.316 INFO  [http-nio-8080-exec-6] c.g.g.a.ServiceExecutionLoggingAspect - Service method WorkoutService.findById(..) executed in 0 ms
+2026-04-30 03:32:34.863 DEBUG [http-nio-8080-exec-10] org.hibernate.SQL - 
+    select
+        w1_0.id,
+        w1_0.name,
+        w1_0.user_id,
+        w1_0.workout_date 
+    from
+        workouts w1_0 
+    where
+        w1_0.id=?
+2026-04-30 03:32:34.863 INFO  [http-nio-8080-exec-10] c.g.g.a.ServiceExecutionLoggingAspect - Service method WorkoutService.findById(..) executed in 0 ms
