@@ -28,6 +28,7 @@ export interface Workout {
 
 export interface WorkoutSet {
   id: Id;
+  name?: string | null;
   weight: number;
   reps: number;
   workoutId: Id;

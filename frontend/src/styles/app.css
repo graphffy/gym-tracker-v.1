@@ -149,6 +149,7 @@ a {
 .detail-hero {
   display: block;
   min-height: 250px;
+  background: linear-gradient(135deg, #173d36 0%, #28586a 62%, #7a5a3a 100%);
 }
 
 .hero h1,
@@ -363,6 +364,24 @@ button:disabled {
 
 .entity-card-clickable {
   cursor: pointer;
+}
+
+.add-set-card {
+  display: grid;
+  place-items: center;
+  min-height: 210px;
+  padding: 20px;
+  border: 1px dashed #b9ac99;
+  border-radius: 8px;
+  background: rgba(255, 250, 241, 0.72);
+  color: var(--blue);
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(35, 32, 27, 0.04);
+}
+
+.add-set-card:hover {
+  border-color: var(--blue);
+  background: var(--paper);
 }
 
 .entity-card-top {

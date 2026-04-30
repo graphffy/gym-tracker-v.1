@@ -1,9 +1,9 @@
 package com.gym.gymtracker.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,7 +21,7 @@ public class BulkWorkoutSetItemDto {
     private Long exerciseId;
 
     @NotNull(message = "Weight must not be null")
-    @Positive(message = "Weight must be positive")
+    @DecimalMin(value = "0.0", message = "Weight must be zero or positive")
     @Schema(description = "Вес в кг", example = "80.0")
     private Double weight;
 

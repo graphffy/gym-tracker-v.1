@@ -1,37 +1,55 @@
+import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import { ArrowLeft } from 'lucide-react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { ArrowLeft, Plus } from 'lucide-react';
 import { workoutApi } from '../api/workoutApi';
 import { userApi } from '../api/userApi';
 import { exerciseApi } from '../api/exerciseApi';
-import { workoutSetApi } from '../api/workoutSetApi';
+import { workoutSetApi, type WorkoutSetPayload } from '../api/workoutSetApi';
+import { categoryApi } from '../api/categoryApi';
+import { getApiErrorMessage } from '../api/http';
 import { EmptyState } from '../components/EmptyState';
 import { EntityCard } from '../components/EntityCard';
 import { ErrorState } from '../components/ErrorState';
 import { LoadingState } from '../components/LoadingState';
 import { exerciseName, formatDate, userName } from './helpers';
+import { WorkoutSetForm } from './WorkoutSetsPage';
 
 export function WorkoutDetailPage() {
+  const queryClient = useQueryClient();
   const { workoutId } = useParams();
   const id = Number(workoutId);
+  const [isCreatingSet, setIsCreatingSet] = useState(false);
+  const [error, setError] = useState('');
   const workoutQuery = useQuery({ queryKey: ['workouts', id], queryFn: () => workoutApi.getById(id), enabled: Number.isFinite(id) });
   const usersQuery = useQuery({ queryKey: ['users'], queryFn: userApi.getAll });
   const exercisesQuery = useQuery({ queryKey: ['exercises'], queryFn: exerciseApi.getAll });
   const setsQuery = useQuery({ queryKey: ['sets'], queryFn: workoutSetApi.getAll });
+  const categoriesQuery = useQuery({ queryKey: ['categories'], queryFn: categoryApi.getAll });
 
-  if (workoutQuery.isLoading || usersQuery.isLoading || exercisesQuery.isLoading || setsQuery.isLoading) {
+  const saveSetMutation = useMutation({
+    mutationFn: (payload: WorkoutSetPayload) => workoutSetApi.create(payload),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['sets'] });
+      setIsCreatingSet(false);
+      setError('');
+    },
+    onError: (err) => setError(getApiErrorMessage(err)),
+  });
+
+  if (workoutQuery.isLoading || usersQuery.isLoading || exercisesQuery.isLoading || setsQuery.isLoading || categoriesQuery.isLoading) {
     return <LoadingState />;
   }
 
-  if (workoutQuery.isError || usersQuery.isError || exercisesQuery.isError || setsQuery.isError || !workoutQuery.data) {
+  if (workoutQuery.isError || usersQuery.isError || exercisesQuery.isError || setsQuery.isError || categoriesQuery.isError || !workoutQuery.data) {
     return <ErrorState message="Тренировка не загрузилась." />;
   }
 
   const workout = workoutQuery.data;
   const users = usersQuery.data ?? [];
   const exercises = exercisesQuery.data ?? [];
+  const categories = categoriesQuery.data ?? [];
   const sets = (setsQuery.data ?? []).filter((set) => set.workoutId === workout.id);
-  const totalWeight = sets.reduce((sum, set) => sum + set.weight * set.reps, 0);
 
   return (
     <div className="page-stack">
@@ -47,30 +65,47 @@ export function WorkoutDetailPage() {
         <div className="detail-stats">
           <span>{sets.length} подходов</span>
           <span>{sets.reduce((sum, set) => sum + set.reps, 0)} повторений</span>
-          <span>{Math.round(totalWeight)} кг объема</span>
         </div>
       </section>
 
       <section>
         <div className="section-heading">
           <h2>Подходы</h2>
-          <Link to="/sets">Управлять подходами</Link>
         </div>
-        {sets.length ? (
-          <div className="card-grid">
-            {sets.map((set) => (
+        {error ? <ErrorState message={error} /> : null}
+        <div className="card-grid">
+          {sets.length ? (
+            sets.map((set) => (
               <EntityCard
                 key={set.id}
-                title={exerciseName(set.exerciseId, exercises)}
+                title={set.name || exerciseName(set.exerciseId, exercises)}
                 subtitle={`${set.weight} кг · ${set.reps} повторений`}
-                meta={<span>{Math.round(set.weight * set.reps)} кг</span>}
+                meta={set.name ? <span>{exerciseName(set.exerciseId, exercises)}</span> : undefined}
               />
-            ))}
-          </div>
-        ) : (
-          <EmptyState title="Пока нет подходов" text="Добавьте подходы на странице подходов." />
-        )}
+            ))
+          ) : (
+            <EmptyState title="Пока нет подходов" text="Добавьте подходы на странице подходов." />
+          )}
+          <button type="button" className="add-set-card" onClick={() => setIsCreatingSet(true)} aria-label="Добавить подход">
+            <Plus size={34} />
+          </button>
+        </div>
       </section>
+
+      {isCreatingSet ? (
+        <WorkoutSetForm
+          set={null}
+          initialWorkoutId={String(workout.id)}
+          workouts={[workout]}
+          exercises={exercises}
+          users={users}
+          categories={categories}
+          isBusy={saveSetMutation.isPending}
+          hideWorkoutQuickCreate
+          onClose={() => setIsCreatingSet(false)}
+          onSubmit={(payload) => saveSetMutation.mutate(payload)}
+        />
+      ) : null}
     </div>
   );
 }

@@ -16,6 +16,7 @@ public class WorkoutSetMapper {
         }
         return WorkoutSetDto.builder()
             .id(set.getId())
+            .name(set.getName())
             .weight(set.getWeight())
             .reps(set.getReps())
             .workoutId(set.getWorkout() != null ? set.getWorkout().getId() : null)

@@ -54,6 +54,7 @@ public class WorkoutSetService {
     @Transactional
     public WorkoutSetDto create(WorkoutSetDto dto) {
         WorkoutSet workoutSet = buildWorkoutSet(
+            dto.getName(),
             dto.getWeight(),
             dto.getReps(),
             getWorkoutOrThrow(dto.getWorkoutId()),
@@ -71,6 +72,7 @@ public class WorkoutSetService {
 
         existingSet.setWeight(dto.getWeight());
         existingSet.setReps(dto.getReps());
+        existingSet.setName(dto.getName());
 
         if (dto.getWorkoutId() != null && !dto.getWorkoutId().equals(existingSet.getWorkout().getId())) {
             existingSet.setWorkout(getWorkoutOrThrow(dto.getWorkoutId()));
@@ -155,8 +157,9 @@ public class WorkoutSetService {
             .orElseThrow(() -> new ResourceNotFoundException("Exercise not found"));
     }
 
-    private WorkoutSet buildWorkoutSet(Double weight, Integer reps, Workout workout, Exercise exercise) {
+    private WorkoutSet buildWorkoutSet(String name, Double weight, Integer reps, Workout workout, Exercise exercise) {
         return WorkoutSet.builder()
+            .name(name)
             .weight(weight)
             .reps(reps)
             .workout(workout)

@@ -1,7 +1,8 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Edit, Plus, Trash2 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
+import { useSearchParams } from 'react-router-dom';
 import { workoutSetApi, type WorkoutSetPayload } from '../api/workoutSetApi';
 import type { WorkoutSet } from '../api/types';
 import { exerciseApi, type ExercisePayload } from '../api/exerciseApi';
@@ -23,6 +24,7 @@ import { usePagination } from '../hooks/usePagination';
 import { exerciseName, formatDate, includesText, pageSize, userName, workoutName } from './helpers';
 
 type SetFormValues = {
+  name: string;
   weight: number;
   reps: number;
   workoutId: string;
@@ -31,12 +33,14 @@ type SetFormValues = {
 
 export function WorkoutSetsPage() {
   const queryClient = useQueryClient();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const requestedWorkoutId = searchParams.get('workoutId') ?? '';
   const [query, setQuery] = useState('');
-  const [workoutFilter, setWorkoutFilter] = useState('');
+  const [workoutFilter, setWorkoutFilter] = useState(requestedWorkoutId);
   const [exerciseFilter, setExerciseFilter] = useState('');
   const [userFilter, setUserFilter] = useState('');
   const [editing, setEditing] = useState<WorkoutSet | null>(null);
-  const [isCreating, setIsCreating] = useState(false);
+  const [isCreating, setIsCreating] = useState(searchParams.get('create') === '1');
   const [deleting, setDeleting] = useState<WorkoutSet | null>(null);
   const [error, setError] = useState('');
 
@@ -51,6 +55,26 @@ export function WorkoutSetsPage() {
   const exercises = exercisesQuery.data ?? [];
   const users = usersQuery.data ?? [];
   const categories = categoriesQuery.data ?? [];
+
+  useEffect(() => {
+    const workoutId = searchParams.get('workoutId') ?? '';
+    if (workoutId) {
+      setWorkoutFilter(workoutId);
+    }
+    if (searchParams.get('create') === '1') {
+      setIsCreating(true);
+    }
+  }, [searchParams]);
+
+  const closeForm = () => {
+    setIsCreating(false);
+    setEditing(null);
+    if (searchParams.has('create')) {
+      const nextParams = new URLSearchParams(searchParams);
+      nextParams.delete('create');
+      setSearchParams(nextParams, { replace: true });
+    }
+  };
 
   const filtered = useMemo(() => sets.filter((set) => {
     const workout = workouts.find((item) => item.id === set.workoutId);
@@ -67,8 +91,8 @@ export function WorkoutSetsPage() {
   const saveMutation = useMutation({
     mutationFn: (payload: WorkoutSetPayload & { current?: WorkoutSet }) =>
       payload.current
-        ? workoutSetApi.update(payload.current.id, { weight: payload.weight, reps: payload.reps, workoutId: payload.workoutId, exerciseId: payload.exerciseId })
-        : workoutSetApi.create({ weight: payload.weight, reps: payload.reps, workoutId: payload.workoutId, exerciseId: payload.exerciseId }),
+        ? workoutSetApi.update(payload.current.id, { name: payload.name, weight: payload.weight, reps: payload.reps, workoutId: payload.workoutId, exerciseId: payload.exerciseId })
+        : workoutSetApi.create({ name: payload.name, weight: payload.weight, reps: payload.reps, workoutId: payload.workoutId, exerciseId: payload.exerciseId }),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['sets'] });
       setIsCreating(false);
@@ -134,7 +158,7 @@ export function WorkoutSetsPage() {
             return (
               <EntityCard
                 key={set.id}
-                title={exerciseName(set.exerciseId, exercises)}
+                title={set.name || exerciseName(set.exerciseId, exercises)}
                 subtitle={`${set.weight} кг · ${set.reps} повторений`}
                 meta={<span>{workout ? userName(workout.userId, users) : 'Без человека'}</span>}
                 actions={
@@ -149,6 +173,7 @@ export function WorkoutSetsPage() {
                 }
               >
                 <div className="mini-list">
+                  {set.name ? <span>{exerciseName(set.exerciseId, exercises)}</span> : null}
                   <span>{workoutName(set.workoutId, workouts)}</span>
                   <span>Объем: {Math.round(set.weight * set.reps)} кг</span>
                 </div>
@@ -165,12 +190,13 @@ export function WorkoutSetsPage() {
       {(isCreating || editing) ? (
         <WorkoutSetForm
           set={editing}
+          initialWorkoutId={workoutFilter}
           workouts={workouts}
           exercises={exercises}
           users={users}
           categories={categories}
           isBusy={saveMutation.isPending}
-          onClose={() => { setIsCreating(false); setEditing(null); }}
+          onClose={closeForm}
           onSubmit={(payload) => saveMutation.mutate({ ...payload, current: editing ?? undefined })}
         />
       ) : null}
@@ -188,13 +214,15 @@ export function WorkoutSetsPage() {
   );
 }
 
-function WorkoutSetForm({ set, workouts, exercises, users, categories, isBusy, onClose, onSubmit }: {
+export function WorkoutSetForm({ set, initialWorkoutId, workouts, exercises, users, categories, isBusy, hideWorkoutQuickCreate = false, onClose, onSubmit }: {
   set: WorkoutSet | null;
+  initialWorkoutId: string;
   workouts: Array<{ id: number; name: string; workoutDate?: string | null }>;
   exercises: Array<{ id: number; name: string }>;
   users: Array<{ id: number; username: string }>;
   categories: Array<{ id: number; name: string }>;
   isBusy: boolean;
+  hideWorkoutQuickCreate?: boolean;
   onClose: () => void;
   onSubmit: (payload: WorkoutSetPayload) => void;
 }) {
@@ -203,9 +231,10 @@ function WorkoutSetForm({ set, workouts, exercises, users, categories, isBusy, o
   const [isExerciseOpen, setIsExerciseOpen] = useState(false);
   const { register, handleSubmit, formState: { errors } } = useForm<SetFormValues>({
     defaultValues: {
-      weight: set?.weight ?? 20,
+      name: set?.name ?? '',
+      weight: set?.weight ?? 0,
       reps: set?.reps ?? 10,
-      workoutId: set?.workoutId ? String(set.workoutId) : '',
+      workoutId: set?.workoutId ? String(set.workoutId) : initialWorkoutId,
       exerciseId: set?.exerciseId ? String(set.exerciseId) : '',
     },
   });
@@ -227,21 +256,25 @@ function WorkoutSetForm({ set, workouts, exercises, users, categories, isBusy, o
   return (
     <Modal title={set ? 'Изменить подход' : 'Новый подход'} onClose={onClose}>
       <form className="form" onSubmit={handleSubmit((values) => onSubmit({
+        name: values.name.trim() || null,
         weight: Number(values.weight),
         reps: Number(values.reps),
         workoutId: Number(values.workoutId),
         exerciseId: Number(values.exerciseId),
       }))}>
+        <FormField label="Название подхода" registration={register('name')} />
         <SelectField label="Тренировка" registration={register('workoutId', { required: 'Выберите тренировку' })} error={errors.workoutId?.message} options={workouts.map((workout) => ({ value: workout.id, label: `${workout.name} · ${formatDate(workout.workoutDate)}` }))} />
-        <button type="button" className="ghost-button quick-create-button" onClick={() => setIsWorkoutOpen(true)}>
-          Добавить новую тренировку
-        </button>
+        {hideWorkoutQuickCreate ? null : (
+          <button type="button" className="ghost-button quick-create-button" onClick={() => setIsWorkoutOpen(true)}>
+            Добавить новую тренировку
+          </button>
+        )}
         <SelectField label="Упражнение" registration={register('exerciseId', { required: 'Выберите упражнение' })} error={errors.exerciseId?.message} options={exercises.map((exercise) => ({ value: exercise.id, label: exercise.name }))} />
         <button type="button" className="ghost-button quick-create-button" onClick={() => setIsExerciseOpen(true)}>
           Добавить новое упражнение
         </button>
         <div className="form-grid">
-          <FormField label="Вес, кг" type="number" step="0.5" min="0.5" registration={register('weight', { required: 'Укажите вес', min: { value: 0.5, message: 'Вес должен быть больше нуля' } })} error={errors.weight?.message} />
+          <FormField label="Вес, кг" type="number" step="0.5" min="0" registration={register('weight', { required: 'Укажите вес', min: { value: 0, message: 'Вес не может быть отрицательным' } })} error={errors.weight?.message} />
           <FormField label="Повторения" type="number" min="1" registration={register('reps', { required: 'Укажите повторения', min: { value: 1, message: 'Минимум 1 повторение' } })} error={errors.reps?.message} />
         </div>
         <div className="form-actions">
