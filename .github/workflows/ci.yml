@@ -1,4 +1,4 @@
-name: CI
+name: CI/CD
 
 on:
   push:
@@ -9,7 +9,31 @@ on:
   pull_request:
 
 jobs:
-  build-and-sonar:
+  frontend:
+    name: Frontend build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Build frontend
+        run: npm run build
+
+  backend:
+    name: Backend tests
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -58,3 +82,50 @@ jobs:
           -Dsonar.inclusions=src/main/java/com/gym/gymtracker/service/**
           -Dsonar.coverage.inclusions=src/main/java/com/gym/gymtracker/service/**
           -Dsonar.coverage.jacoco.xmlReportPaths=${{ github.workspace }}/target/site/jacoco/jacoco.xml
+
+  docker:
+    name: Docker build
+    runs-on: ubuntu-latest
+    needs:
+      - frontend
+      - backend
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t gym-tracker:${{ github.sha }} .
+
+  deploy:
+    name: Deploy to Render
+    runs-on: ubuntu-latest
+    needs: docker
+    if: >
+      github.event_name == 'push' &&
+      (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+    steps:
+      - name: Trigger Render deploy
+        env:
+          RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        run: |
+          if [ -z "$RENDER_DEPLOY_HOOK_URL" ]; then
+            echo "RENDER_DEPLOY_HOOK_URL is not configured; skipping deploy."
+            exit 0
+          fi
+          curl --fail --request POST "$RENDER_DEPLOY_HOOK_URL"
+
+      - name: Healthcheck
+        env:
+          RENDER_SERVICE_URL: ${{ vars.RENDER_SERVICE_URL }}
+        run: |
+          if [ -z "$RENDER_SERVICE_URL" ]; then
+            echo "RENDER_SERVICE_URL is not configured; skipping healthcheck."
+            exit 0
+          fi
+          for i in {1..60}; do
+            if curl --fail --silent --show-error "$RENDER_SERVICE_URL/actuator/health"; then
+              exit 0
+            fi
+            sleep 10
+          done
+          exit 1

@@ -1,0 +1,14 @@
+.git
+.github
+.idea
+.vscode
+.run
+docs
+logs
+target
+frontend/dist
+frontend/node_modules
+frontend/tsconfig.tsbuildinfo
+*.iml
+*.jmx
+README.md
