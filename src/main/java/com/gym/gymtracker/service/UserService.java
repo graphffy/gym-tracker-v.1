@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -30,7 +31,7 @@ public class UserService {
     public List<UserDto> findAll() {
         return userRepository.findAll().stream()
             .map(userMapper::toDto)
-            .toList();
+            .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
@@ -112,4 +113,3 @@ public class UserService {
         return userMapper.toDto(updatedUser);
     }
 }
-

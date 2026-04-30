@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -140,7 +141,7 @@ public class WorkoutSetService {
         List<WorkoutSetDto> content = pageResult.getContent()
             .stream()
             .map(workoutSetMapper::toDto)
-            .toList();
+            .collect(Collectors.toList());
         return new PageImpl<>(content, pageable, pageResult.getTotalElements());
     }
 

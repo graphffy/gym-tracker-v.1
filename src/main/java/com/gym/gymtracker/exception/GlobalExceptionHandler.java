@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.Instant;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestControllerAdvice
 @Slf4j
@@ -22,7 +24,7 @@ public class GlobalExceptionHandler {
                                                                    HttpServletRequest request) {
         log.error("Resource not found. path={}, message={}", request.getRequestURI(), ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
-            .body(buildError(HttpStatus.NOT_FOUND, ex.getMessage(), request.getRequestURI(), List.of()));
+            .body(buildError(HttpStatus.NOT_FOUND, ex.getMessage(), request.getRequestURI(), Collections.emptyList()));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -33,7 +35,7 @@ public class GlobalExceptionHandler {
             .getFieldErrors()
             .stream()
             .map(this::toValidationError)
-            .toList();
+            .collect(Collectors.toList());
 
         return ResponseEntity.badRequest()
             .body(buildError(HttpStatus.BAD_REQUEST, "Validation failed", request.getRequestURI(), errors));
@@ -45,7 +47,11 @@ public class GlobalExceptionHandler {
                                                                       HttpServletRequest request) {
         log.error("Constraint violation. path={}, message={}", request.getRequestURI(), ex.getMessage());
         return ResponseEntity.badRequest()
-            .body(buildError(HttpStatus.BAD_REQUEST, ex.getMessage(), request.getRequestURI(), List.of()));
+            .body(buildError(
+                HttpStatus.BAD_REQUEST,
+                ex.getMessage(),
+                request.getRequestURI(),
+                Collections.emptyList()));
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
@@ -53,7 +59,11 @@ public class GlobalExceptionHandler {
                                                                   HttpServletRequest request) {
         log.error("Illegal argument. path={}, message={}", request.getRequestURI(), ex.getMessage());
         return ResponseEntity.badRequest()
-            .body(buildError(HttpStatus.BAD_REQUEST, ex.getMessage(), request.getRequestURI(), List.of()));
+            .body(buildError(
+                HttpStatus.BAD_REQUEST,
+                ex.getMessage(),
+                request.getRequestURI(),
+                Collections.emptyList()));
     }
 
     @ExceptionHandler(IllegalStateException.class)
@@ -61,7 +71,11 @@ public class GlobalExceptionHandler {
                                                                HttpServletRequest request) {
         log.error("Illegal state. path={}, message={}", request.getRequestURI(), ex.getMessage());
         return ResponseEntity.badRequest()
-            .body(buildError(HttpStatus.BAD_REQUEST, ex.getMessage(), request.getRequestURI(), List.of()));
+            .body(buildError(
+                HttpStatus.BAD_REQUEST,
+                ex.getMessage(),
+                request.getRequestURI(),
+                Collections.emptyList()));
     }
 
     @ExceptionHandler(BulkWorkoutDemoException.class)
@@ -75,7 +89,7 @@ public class GlobalExceptionHandler {
                 HttpStatus.INTERNAL_SERVER_ERROR,
                 ex.getMessage(),
                 request.getRequestURI(),
-                List.of()));
+                Collections.emptyList()));
     }
 
     @ExceptionHandler(Exception.class)
@@ -85,7 +99,7 @@ public class GlobalExceptionHandler {
             .body(buildError(HttpStatus.INTERNAL_SERVER_ERROR,
                 "Unexpected internal server error",
                 request.getRequestURI(),
-                List.of()));
+                Collections.emptyList()));
     }
 
     private ApiValidationError toValidationError(FieldError fieldError) {

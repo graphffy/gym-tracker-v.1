@@ -14,6 +14,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 @Component
 public class AsyncTaskStore {
@@ -63,7 +64,7 @@ public class AsyncTaskStore {
         List<AsyncTaskStatusDto> taskList = tasks.values()
             .stream()
             .sorted(Comparator.comparing(AsyncTaskStatusDto::getCreatedAt))
-            .toList();
+            .collect(Collectors.toList());
 
         return AsyncTaskSummaryDto.builder()
             .totalTasks(taskList.size())
@@ -71,7 +72,7 @@ public class AsyncTaskStore {
             .runningTasks(countByState(taskList, AsyncTaskState.RUNNING))
             .completedTasks(getCompletedTaskCount())
             .failedTasks(countByState(taskList, AsyncTaskState.FAILED))
-            .tasks(taskList.stream().map(this::toDetails).toList())
+            .tasks(taskList.stream().map(this::toDetails).collect(Collectors.toList()))
             .build();
     }
 

@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Gym Tracker Backend" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="gym-tracker" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.gym.gymtracker.GymTrackerApplication" />
+    <option name="MAIN_CLASS_NAME" value="com.gym.gymtracker.GymTrackerApplication" />
+    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
